@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Sensors and Input Devices</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="sensors-and-input-devices">Sensors and Input Devices</h1>
+<h2 id="sensor-types-hierarchy">Sensor Types Hierarchy</h2>
+<pre><code>FRC Sensors
+├── Digital Sensors
+│   ├── Encoders
+│   ├── Limit Switches
+│   └── Digital I/O
+├── Analog Sensors
+│   ├── Potentiometers
+│   ├── Ultrasonic
+│   └── IR Distance
+├── Complex Sensors
+│   ├── Gyroscopes
+│   ├── Accelerometers
+│   └── Vision Cameras
+└── Network Tables
+    ├── Limelight
+    └── PhotonVision
+</code></pre>
+<h2 id="common-sensor-types">Common Sensor Types</h2>
+<table>
+<thead>
+<tr>
+<th>Sensor Type</th>
+<th>Interface</th>
+<th>Resolution</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quadrature Encoder</td>
+<td>DIO</td>
+<td>Variable PPR</td>
+<td>Position/Velocity</td>
+</tr>
+<tr>
+<td>Absolute Encoder</td>
+<td>CAN/SPI</td>
+<td>12-bit</td>
+<td>Absolute Position</td>
+</tr>
+<tr>
+<td>Limit Switch</td>
+<td>DIO</td>
+<td>Binary</td>
+<td>End Stops</td>
+</tr>
+<tr>
+<td>Gyro</td>
+<td>SPI/I2C</td>
+<td>0.1°</td>
+<td>Robot Orientation</td>
+</tr>
+<tr>
+<td>Ultrasonic</td>
+<td>Analog/DIO</td>
+<td>~2mm</td>
+<td>Distance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<ol>
+<li>Encoder Implementation</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ArmSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">TalonFX</span> <span class="hljs-variable">motor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TalonFX</span>(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">DutyCycleEncoder</span> <span class="hljs-variable">absEncoder</span> <span class="hljs-operator">=</span> 
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DutyCycleEncoder</span>(<span class="hljs-number">0</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ArmSubsystem</span><span class="hljs-params">()</span> {
+        absEncoder.setDistancePerRotation(<span class="hljs-number">360.0</span>);
+        absEncoder.setPositionOffset(<span class="hljs-number">90.0</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getAngle</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> absEncoder.getAbsolutePosition();
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">periodic</span><span class="hljs-params">()</span> {
+        SmartDashboard.putNumber(<span class="hljs-string">&quot;Arm Angle&quot;</span>, getAngle());
+    }
+}
+</code></pre>
+<ol start="2">
+<li>Limit Switch Safety</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ElevatorSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">CANSparkMax</span> <span class="hljs-variable">motor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CANSparkMax</span>(<span class="hljs-number">1</span>, MotorType.kBrushless);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">DigitalInput</span> <span class="hljs-variable">bottomLimit</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DigitalInput</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">DigitalInput</span> <span class="hljs-variable">topLimit</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DigitalInput</span>(<span class="hljs-number">1</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setSpeed</span><span class="hljs-params">(<span class="hljs-type">double</span> speed)</span> {
+        <span class="hljs-comment">// Stop at limits</span>
+        <span class="hljs-keyword">if</span> ((speed &lt; <span class="hljs-number">0</span> &amp;&amp; bottomLimit.get()) || 
+            (speed &gt; <span class="hljs-number">0</span> &amp;&amp; topLimit.get())) {
+            motor.set(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">return</span>;
+        }
+        motor.set(speed);
+    }
+}
+</code></pre>
+<ol start="3">
+<li>Gyro-Based Turning</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">AHRS</span> <span class="hljs-variable">gyro</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AHRS</span>(SPI.Port.kMXP);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">turnToAngle</span><span class="hljs-params">(<span class="hljs-type">double</span> targetAngle)</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">currentAngle</span> <span class="hljs-operator">=</span> gyro.getAngle();
+        <span class="hljs-type">double</span> <span class="hljs-variable">error</span> <span class="hljs-operator">=</span> targetAngle - currentAngle;
+        
+        <span class="hljs-comment">// Simple P controller</span>
+        <span class="hljs-type">double</span> <span class="hljs-variable">turnPower</span> <span class="hljs-operator">=</span> error * <span class="hljs-number">0.01</span>;
+        turnPower = Math.min(Math.max(turnPower, -<span class="hljs-number">0.5</span>), <span class="hljs-number">0.5</span>);
+        
+        arcadeDrive(<span class="hljs-number">0</span>, turnPower);
+    }
+}
+</code></pre>
+<h2 id="sensor-configuration">Sensor Configuration</h2>
+<h3 id="filtering-and-smoothing">Filtering and Smoothing</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SensorFilter</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">windowSize</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Queue&lt;Double&gt; window = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">filter</span><span class="hljs-params">(<span class="hljs-type">double</span> input)</span> {
+        window.add(input);
+        <span class="hljs-keyword">if</span> (window.size() &gt; windowSize) {
+            window.remove();
+        }
+        
+        <span class="hljs-keyword">return</span> window.stream()
+            .mapToDouble(Double::doubleValue)
+            .average()
+            .orElse(input);
+    }
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="sensor-management">Sensor Management</h3>
+<ol>
+<li>Initialize sensors in robotInit</li>
+<li>Check sensor connectivity</li>
+<li>Implement timeout handling</li>
+<li>Use sensor fusion when possible</li>
+</ol>
+<h3 id="data-processing">Data Processing</h3>
+<ol>
+<li>Filter noisy signals</li>
+<li>Implement deadbands</li>
+<li>Handle sensor failures gracefully</li>
+<li>Log sensor data for debugging</li>
+</ol>
+<h3 id="safety-considerations">Safety Considerations</h3>
+<ol>
+<li>Use redundant sensors for critical systems</li>
+<li>Implement soft limits before hard limits</li>
+<li>Regular sensor calibration</li>
+<li>Failsafe default values</li>
+</ol>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.wpilib.org/en/stable/docs/software/hardware-apis/sensors/">WPILib Sensors</a></li>
+<li><a href="https://pdocs.kauailabs.com/navx-mxp/">NavX Documentation</a></li>
+<li><a href="https://docs.revrobotics.com/through-bore-encoder/">REV Through Bore Encoder</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

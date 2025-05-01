@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Command-Based Programming</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="command-based-programming">Command-Based Programming</h1>
+<h2 id="overview">Overview</h2>
+<p>Command-based programming is a design pattern that separates robot functionality into subsystems and commands.</p>
+<h2 id="basic-structure">Basic Structure</h2>
+<h3 id="subsystem-example">Subsystem Example</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ArmSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> TalonFX motor;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> PIDController pid;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ArmSubsystem</span><span class="hljs-params">()</span> {
+        motor = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TalonFX</span>(<span class="hljs-number">1</span>);
+        pid = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PIDController</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.1</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setPosition</span><span class="hljs-params">(<span class="hljs-type">double</span> position)</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">output</span> <span class="hljs-operator">=</span> pid.calculate(getPosition(), position);
+        motor.set(TalonFXControlMode.PercentOutput, output);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getPosition</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> motor.getSelectedSensorPosition();
+    }
+}
+</code></pre>
+<h3 id="command-example">Command Example</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SetArmPositionCommand</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CommandBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ArmSubsystem arm;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> targetPosition;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">SetArmPositionCommand</span><span class="hljs-params">(ArmSubsystem arm, <span class="hljs-type">double</span> position)</span> {
+        <span class="hljs-built_in">this</span>.arm = arm;
+        <span class="hljs-built_in">this</span>.targetPosition = position;
+        addRequirements(arm);
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span> {
+        arm.setPosition(targetPosition);
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isFinished</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> Math.abs(arm.getPosition() - targetPosition) &lt; <span class="hljs-number">0.1</span>;
+    }
+}
+</code></pre>
+<h2 id="command-groups">Command Groups</h2>
+<h3 id="sequential-commands">Sequential Commands</h3>
+<pre><code class="language-java"><span class="hljs-keyword">new</span> <span class="hljs-title class_">SequentialCommandGroup</span>(
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">SetArmPositionCommand</span>(arm, <span class="hljs-number">90</span>),
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">WaitCommand</span>(<span class="hljs-number">1.0</span>),
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">IntakeCommand</span>(intake).withTimeout(<span class="hljs-number">2.0</span>)
+);
+</code></pre>
+<h3 id="parallel-commands">Parallel Commands</h3>
+<pre><code class="language-java"><span class="hljs-keyword">new</span> <span class="hljs-title class_">ParallelCommandGroup</span>(
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">DriveDistanceCommand</span>(drive, <span class="hljs-number">2.0</span>),
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">PrepareShooterCommand</span>(shooter)
+);
+</code></pre>
+<h2 id="trigger-bindings">Trigger Bindings</h2>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RobotContainer</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">XboxController</span> <span class="hljs-variable">controller</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">XboxController</span>(<span class="hljs-number">0</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configureButtonBindings</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">JoystickButton</span>(controller, Button.kA.value)
+            .whenPressed(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SetArmPositionCommand</span>(arm, <span class="hljs-number">90</span>));
+            
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Trigger</span>(() -&gt; controller.getRightTriggerAxis() &gt; <span class="hljs-number">0.5</span>)
+            .whileTrue(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ShootCommand</span>(shooter));
+    }
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p>Command Organization</p>
+<ul>
+<li>One action per command</li>
+<li>Clear naming conventions</li>
+<li>Document requirements</li>
+</ul>
+</li>
+<li>
+<p>Subsystem Design</p>
+<ul>
+<li>Single responsibility</li>
+<li>Encapsulated state</li>
+<li>Default commands when needed</li>
+</ul>
+</li>
+<li>
+<p>Error Handling</p>
+<ul>
+<li>Timeout safety</li>
+<li>Interruption handling</li>
+<li>Graceful failure modes</li>
+</ul>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

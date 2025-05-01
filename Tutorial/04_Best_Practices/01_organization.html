@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Code Organization</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="code-organization">Code Organization</h1>
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>robot/
+├── Constants.java
+├── Main.java
+├── Robot.java
+├── RobotContainer.java
+├── commands/
+│   ├── autonomous/
+│   └── teleop/
+├── subsystems/
+└── utils/
+</code></pre>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Convention</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Classes</td>
+<td>PascalCase</td>
+<td>ShooterSubsystem</td>
+</tr>
+<tr>
+<td>Methods</td>
+<td>camelCase</td>
+<td>setTargetVelocity</td>
+</tr>
+<tr>
+<td>Constants</td>
+<td>UPPER_SNAKE_CASE</td>
+<td>SHOOTER_PORT</td>
+</tr>
+<tr>
+<td>Variables</td>
+<td>camelCase</td>
+<td>currentSpeed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="constants-management">Constants Management</h2>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Constants</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveConstants</span> {
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">LEFT_MASTER_PORT</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">LEFT_FOLLOWER_PORT</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> <span class="hljs-variable">kP</span> <span class="hljs-operator">=</span> <span class="hljs-number">0.1</span>;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShooterConstants</span> {
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">MOTOR_PORT</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> <span class="hljs-variable">TARGET_RPM</span> <span class="hljs-operator">=</span> <span class="hljs-number">4000</span>;
+    }
+}
+</code></pre>
+<h2 id="documentation-standards">Documentation Standards</h2>
+<pre><code class="language-java"><span class="hljs-comment">/**
+ * Controls the robot&#x27;s shooting mechanism.
+ * Handles velocity control and feed wheel timing.
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShooterSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-comment">/**
+     * Sets the shooter wheel to a specific velocity
+     * <span class="hljs-doctag">@param</span> rpm Target velocity in rotations per minute
+     * <span class="hljs-doctag">@return</span> true if at target velocity
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">setVelocity</span><span class="hljs-params">(<span class="hljs-type">double</span> rpm)</span> {
+        <span class="hljs-comment">// Implementation</span>
+    }
+}
+</code></pre>
+<h2 id="code-reviews-checklist">Code Reviews Checklist</h2>
+<ol>
+<li>
+<p>Code Style</p>
+<ul>
+<li>Consistent formatting</li>
+<li>Clear naming</li>
+<li>Proper documentation</li>
+</ul>
+</li>
+<li>
+<p>Architecture</p>
+<ul>
+<li>Single responsibility</li>
+<li>Dependency management</li>
+<li>Error handling</li>
+</ul>
+</li>
+<li>
+<p>Safety</p>
+<ul>
+<li>Motor safety</li>
+<li>Current limits</li>
+<li>Failsafe defaults</li>
+</ul>
+</li>
+</ol>
+<h2 id="version-control-best-practices">Version Control Best Practices</h2>
+<ol>
+<li>
+<p>Commit Messages</p>
+<ul>
+<li>Clear descriptions</li>
+<li>Reference issues</li>
+<li>Tag subsystems</li>
+</ul>
+</li>
+<li>
+<p>Branching Strategy</p>
+<ul>
+<li>feature/</li>
+<li>bugfix/</li>
+<li>comp/</li>
+</ul>
+</li>
+<li>
+<p>Code Review Process</p>
+<ul>
+<li>Review checklist</li>
+<li>Test requirements</li>
+<li>Documentation updates</li>
+</ul>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

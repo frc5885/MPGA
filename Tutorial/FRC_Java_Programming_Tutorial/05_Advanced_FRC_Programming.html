@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Advanced FRC Programming</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="advanced-frc-programming">Advanced FRC Programming</h1>
+<p>In this section, we will explore advanced FRC programming concepts that can help you build a highly competitive robot.</p>
+<hr>
+<h2 id="1-pid-control">1. PID Control</h2>
+<p>PID (Proportional-Integral-Derivative) control is a feedback control mechanism used to achieve precise control of motors and other actuators.</p>
+<h3 id="pid-formula">PID Formula</h3>
+<pre><code>Output = (kP * Error) + (kI * Integral) + (kD * Derivative)
+</code></pre>
+<ul>
+<li><strong>kP</strong>: Proportional gain</li>
+<li><strong>kI</strong>: Integral gain</li>
+<li><strong>kD</strong>: Derivative gain</li>
+</ul>
+<h3 id="example-pid-controller-in-wpilib">Example: PID Controller in WPILib</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.controller.PIDController;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PIDExample</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">PIDController</span> <span class="hljs-variable">pidController</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PIDController</span>(<span class="hljs-number">0.1</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.1</span>);
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">controlLoop</span><span class="hljs-params">(<span class="hljs-type">double</span> setpoint, <span class="hljs-type">double</span> currentPosition)</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">output</span> <span class="hljs-operator">=</span> pidController.calculate(currentPosition, setpoint);
+        System.out.println(<span class="hljs-string">&quot;PID Output: &quot;</span> + output);
+    }
+}
+</code></pre>
+<hr>
+<h2 id="2-motion-profiling">2. Motion Profiling</h2>
+<p>Motion profiling is used to generate smooth paths for the robot to follow, ensuring efficient and precise movement.</p>
+<h3 id="example-using-wpilibs-trajectory-class">Example: Using WPILib's Trajectory Class</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.trajectory.Trajectory;
+<span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+<span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.geometry.Pose2d;
+<span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.geometry.Translation2d;
+<span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.geometry.Rotation2d;
+
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MotionProfilingExample</span> {
+    <span class="hljs-keyword">public</span> Trajectory <span class="hljs-title function_">generateTrajectory</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> TrajectoryGenerator.generateTrajectory(
+            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Pose2d</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Rotation2d</span>(<span class="hljs-number">0</span>)),
+            List.of(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Translation2d</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Translation2d</span>(<span class="hljs-number">2</span>, -<span class="hljs-number">1</span>)),
+            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Pose2d</span>(<span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Rotation2d</span>(<span class="hljs-number">0</span>)),
+            <span class="hljs-comment">// Trajectory configuration</span>
+            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Trajectory</span>.Config(<span class="hljs-number">2.0</span>, <span class="hljs-number">2.0</span>) <span class="hljs-comment">// Max velocity and acceleration</span>
+        );
+    }
+}
+</code></pre>
+<hr>
+<h2 id="3-vision-processing">3. Vision Processing</h2>
+<p>Vision processing allows the robot to use cameras to detect objects, align with targets, and more.</p>
+<h3 id="example-using-opencv-for-vision-processing">Example: Using OpenCV for Vision Processing</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> org.opencv.core.Core;
+<span class="hljs-keyword">import</span> org.opencv.core.Mat;
+<span class="hljs-keyword">import</span> org.opencv.imgproc.Imgproc;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VisionExample</span> {
+    <span class="hljs-keyword">static</span> {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">processImage</span><span class="hljs-params">(Mat inputImage)</span> {
+        <span class="hljs-type">Mat</span> <span class="hljs-variable">grayImage</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Mat</span>();
+        Imgproc.cvtColor(inputImage, grayImage, Imgproc.COLOR_BGR2GRAY);
+        System.out.println(<span class="hljs-string">&quot;Image processed to grayscale.&quot;</span>);
+    }
+}
+</code></pre>
+<hr>
+<h2 id="4-autonomous-path-planning">4. Autonomous Path Planning</h2>
+<p>Autonomous path planning involves creating paths for the robot to follow during the autonomous period.</p>
+<h3 id="example-combining-trajectory-with-ramsete-controller">Example: Combining Trajectory with Ramsete Controller</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.controller.RamseteController;
+<span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.trajectory.Trajectory;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AutonomousPathPlanning</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">RamseteController</span> <span class="hljs-variable">ramseteController</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RamseteController</span>();
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">followTrajectory</span><span class="hljs-params">(Trajectory trajectory, <span class="hljs-type">double</span> currentTime)</span> {
+        <span class="hljs-type">var</span> <span class="hljs-variable">desiredState</span> <span class="hljs-operator">=</span> trajectory.sample(currentTime);
+        <span class="hljs-type">var</span> <span class="hljs-variable">output</span> <span class="hljs-operator">=</span> ramseteController.calculate(
+            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Pose2d</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Rotation2d</span>(<span class="hljs-number">0</span>)), <span class="hljs-comment">// Current robot pose</span>
+            desiredState
+        );
+        System.out.println(<span class="hljs-string">&quot;Ramsete Output: &quot;</span> + output);
+    }
+}
+</code></pre>
+<hr>
+<p>This concludes the <strong>Advanced FRC Programming</strong> section. In the next section, we will provide useful resources and troubleshooting tips. <a href="06_Appendices.html">Appendices</a></p>
+
+            
+            
+        </body>
+        </html>

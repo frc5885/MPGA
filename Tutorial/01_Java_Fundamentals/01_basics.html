@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Basic Java Concepts</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="basic-java-concepts">Basic Java Concepts</h1>
+<h2 id="data-types-hierarchy">Data Types Hierarchy</h2>
+<pre><code>Java Data Types
+├── Primitive Types
+│   ├── Numeric
+│   │   ├── Integer Types
+│   │   │   ├── byte  (8 bits)
+│   │   │   ├── short (16 bits)
+│   │   │   ├── int   (32 bits)
+│   │   │   └── long  (64 bits)
+│   │   └── Floating Point
+│   │       ├── float  (32 bits)
+│   │       └── double (64 bits)
+│   ├── char (16 bits)
+│   └── boolean (1 bit)
+└── Reference Types
+    ├── Classes
+    ├── Interfaces
+    └── Arrays
+</code></pre>
+<h2 id="variables-and-constants">Variables and Constants</h2>
+<h3 id="examples">Examples</h3>
+<ol>
+<li>Variable Declaration and Initialization</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-comment">// Basic variable declarations</span>
+<span class="hljs-type">int</span> <span class="hljs-variable">motorSpeed</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+<span class="hljs-type">double</span> <span class="hljs-variable">voltage</span> <span class="hljs-operator">=</span> <span class="hljs-number">12.6</span>;
+<span class="hljs-type">boolean</span> <span class="hljs-variable">isEnabled</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Constants</span>
+<span class="hljs-keyword">final</span> <span class="hljs-type">double</span> <span class="hljs-variable">PI</span> <span class="hljs-operator">=</span> <span class="hljs-number">3.14159</span>;
+<span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">MAX_SPEED</span> <span class="hljs-operator">=</span> <span class="hljs-number">100</span>;
+</code></pre>
+<ol start="2">
+<li>Type Conversion</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-comment">// Implicit conversion</span>
+<span class="hljs-type">int</span> <span class="hljs-variable">smallNumber</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;
+<span class="hljs-type">long</span> <span class="hljs-variable">bigNumber</span> <span class="hljs-operator">=</span> smallNumber; <span class="hljs-comment">// OK</span>
+
+<span class="hljs-comment">// Explicit conversion</span>
+<span class="hljs-type">double</span> <span class="hljs-variable">speed</span> <span class="hljs-operator">=</span> <span class="hljs-number">45.7</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">roundedSpeed</span> <span class="hljs-operator">=</span> (<span class="hljs-type">int</span>) speed; <span class="hljs-comment">// 45</span>
+</code></pre>
+<ol start="3">
+<li>String Operations</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-type">String</span> <span class="hljs-variable">team</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Team &quot;</span>;
+<span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> <span class="hljs-number">1234</span>;
+<span class="hljs-type">String</span> <span class="hljs-variable">fullName</span> <span class="hljs-operator">=</span> team + number; <span class="hljs-comment">// &quot;Team 1234&quot;</span>
+
+<span class="hljs-comment">// String formatting</span>
+<span class="hljs-type">String</span> <span class="hljs-variable">formatted</span> <span class="hljs-operator">=</span> String.format(<span class="hljs-string">&quot;Speed: %.2f&quot;</span>, <span class="hljs-number">12.3456</span>); <span class="hljs-comment">// &quot;Speed: 12.35&quot;</span>
+</code></pre>
+<h2 id="control-flow">Control Flow</h2>
+<h3 id="truth-table-for-logical-operators">Truth Table for Logical Operators</h3>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A &amp;&amp; B</th>
+<th>A || B</th>
+<th>!A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples-1">Examples</h3>
+<ol>
+<li>If-Else Statements</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">if</span> (voltage &gt; <span class="hljs-number">12.0</span>) {
+    System.out.println(<span class="hljs-string">&quot;Battery OK&quot;</span>);
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (voltage &gt; <span class="hljs-number">10.0</span>) {
+    System.out.println(<span class="hljs-string">&quot;Battery Low&quot;</span>);
+} <span class="hljs-keyword">else</span> {
+    System.out.println(<span class="hljs-string">&quot;Replace Battery&quot;</span>);
+}
+</code></pre>
+<ol start="2">
+<li>Switch Statement</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-type">int</span> <span class="hljs-variable">autoMode</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>;
+<span class="hljs-keyword">switch</span> (autoMode) {
+    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+        runSimpleAuto();
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+        runComplexAuto();
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">default</span>:
+        runDefaultAuto();
+}
+</code></pre>
+<ol start="3">
+<li>Loops</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-comment">// For loop</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+    setMotorSpeed(i * <span class="hljs-number">0.1</span>);
+}
+
+<span class="hljs-comment">// While loop</span>
+<span class="hljs-keyword">while</span> (isAutonomous() &amp;&amp; isEnabled()) {
+    checkSensors();
+    updateMotors();
+}
+
+<span class="hljs-comment">// Do-while loop</span>
+<span class="hljs-keyword">do</span> {
+    readJoystick();
+    updateDrive();
+} <span class="hljs-keyword">while</span> (isTeleop());
+</code></pre>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.oracle.com/javase/tutorial/">Oracle Java Tutorial</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/">WPILib Documentation</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

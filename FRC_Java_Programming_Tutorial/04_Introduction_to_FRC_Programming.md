@@ -118,4 +118,4 @@ public class DriveCommand extends CommandBase {
 
 ---
 
-This concludes the **Introduction to FRC Programming** section. Next, we will explore **Advanced FRC Programming** concepts.
+This concludes the **Introduction to FRC Programming** section. Next, we will explore [Advanced FRC Programming](05_Advanced_FRC_Programming.md) concepts.

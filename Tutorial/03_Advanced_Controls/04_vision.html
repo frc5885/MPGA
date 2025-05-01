@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Vision Processing</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="vision-processing">Vision Processing</h1>
+<h2 id="overview">Overview</h2>
+<p>Vision processing enables robots to identify and track targets using cameras and image processing.</p>
+<h2 id="vision-systems">Vision Systems</h2>
+<h3 id="common-solutions">Common Solutions</h3>
+<ul>
+<li>Limelight</li>
+<li>PhotonVision</li>
+<li>Raspberry Pi with OpenCV</li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<h3 id="limelight-example">Limelight Example</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VisionSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">NetworkTable</span> <span class="hljs-variable">table</span> <span class="hljs-operator">=</span> 
+        NetworkTableInstance.getDefault().getTable(<span class="hljs-string">&quot;limelight&quot;</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">hasTarget</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> table.getEntry(<span class="hljs-string">&quot;tv&quot;</span>).getDouble(<span class="hljs-number">0</span>) == <span class="hljs-number">1.0</span>;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getTargetX</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> table.getEntry(<span class="hljs-string">&quot;tx&quot;</span>).getDouble(<span class="hljs-number">0</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getTargetY</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> table.getEntry(<span class="hljs-string">&quot;ty&quot;</span>).getDouble(<span class="hljs-number">0</span>);
+    }
+}
+</code></pre>
+<h3 id="target-tracking">Target Tracking</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TrackTargetCommand</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CommandBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> DriveSubsystem drive;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> VisionSubsystem vision;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">PIDController</span> <span class="hljs-variable">turnPID</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PIDController</span>(<span class="hljs-number">0.05</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">if</span> (vision.hasTarget()) {
+            <span class="hljs-type">double</span> <span class="hljs-variable">rotation</span> <span class="hljs-operator">=</span> turnPID.calculate(vision.getTargetX(), <span class="hljs-number">0</span>);
+            drive.arcadeDrive(<span class="hljs-number">0</span>, rotation);
+        }
+    }
+}
+</code></pre>
+<h2 id="pipeline-configuration">Pipeline Configuration</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Typical Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exposure</td>
+<td>2-6ms</td>
+<td>Reduce blur</td>
+</tr>
+<tr>
+<td>LED Mode</td>
+<td>3 (Force ON)</td>
+<td>Consistent lighting</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td>0-9</td>
+<td>Different targets</td>
+</tr>
+<tr>
+<td>Stream</td>
+<td>2 (PiP Main)</td>
+<td>Driver feedback</td>
+</tr>
+</tbody>
+</table>
+<h2 id="distance-calculation">Distance Calculation</h2>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">calculateDistance</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">double</span> <span class="hljs-variable">targetHeightInches</span> <span class="hljs-operator">=</span> <span class="hljs-number">104.0</span>;
+    <span class="hljs-type">double</span> <span class="hljs-variable">cameraHeightInches</span> <span class="hljs-operator">=</span> <span class="hljs-number">24.0</span>;
+    <span class="hljs-type">double</span> <span class="hljs-variable">cameraPitchDegrees</span> <span class="hljs-operator">=</span> <span class="hljs-number">25.0</span>;
+    <span class="hljs-type">double</span> <span class="hljs-variable">targetY</span> <span class="hljs-operator">=</span> vision.getTargetY();
+    
+    <span class="hljs-keyword">return</span> (targetHeightInches - cameraHeightInches) /
+           Math.tan(Math.toRadians(cameraPitchDegrees + targetY));
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p>Vision Setup</p>
+<ul>
+<li>Calibrate cameras</li>
+<li>Test lighting conditions</li>
+<li>Backup strategies</li>
+</ul>
+</li>
+<li>
+<p>Processing</p>
+<ul>
+<li>Filter noise</li>
+<li>Handle target loss</li>
+<li>Validate data</li>
+</ul>
+</li>
+<li>
+<p>Competition</p>
+<ul>
+<li>Multiple pipelines</li>
+<li>Quick switching</li>
+<li>Network resilience</li>
+</ul>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

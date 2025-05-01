@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Robot Program Structure</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="robot-program-structure">Robot Program Structure</h1>
+<h2 id="program-architecture-types">Program Architecture Types</h2>
+<pre><code>Robot Program Types
+├── Iterative Robot
+│   ├── robotInit()
+│   ├── teleopPeriodic()
+│   └── autonomousPeriodic()
+└── Command-Based
+    ├── RobotContainer
+    ├── Subsystems
+    └── Commands
+</code></pre>
+<h2 id="program-flow-diagram">Program Flow Diagram</h2>
+<pre><code>Robot Lifecycle
+├── Robot Power On
+│   └── robotInit()
+├── Disabled Mode
+│   ├── disabledInit()
+│   └── disabledPeriodic()
+├── Autonomous Mode
+│   ├── autonomousInit()
+│   └── autonomousPeriodic()
+└── Teleop Mode
+    ├── teleopInit()
+    └── teleopPeriodic()
+</code></pre>
+<h2 id="examples">Examples</h2>
+<ol>
+<li>Basic Robot Structure</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Robot</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">TimedRobot</span> {
+    <span class="hljs-keyword">private</span> DriveSubsystem drive;
+    <span class="hljs-keyword">private</span> ShooterSubsystem shooter;
+    <span class="hljs-keyword">private</span> XboxController controller;
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">robotInit</span><span class="hljs-params">()</span> {
+        drive = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DriveSubsystem</span>();
+        shooter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ShooterSubsystem</span>();
+        controller = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XboxController</span>(<span class="hljs-number">0</span>);
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">teleopPeriodic</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Drive with arcade drive</span>
+        drive.arcadeDrive(
+            controller.getLeftY(),
+            controller.getRightX()
+        );
+        
+        <span class="hljs-comment">// Control shooter</span>
+        <span class="hljs-keyword">if</span> (controller.getAButton()) {
+            shooter.shoot();
+        }
+    }
+}
+</code></pre>
+<ol start="2">
+<li>Command-Based Structure</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RobotContainer</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">DriveSubsystem</span> <span class="hljs-variable">m_drive</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DriveSubsystem</span>();
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">ShooterSubsystem</span> <span class="hljs-variable">m_shooter</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ShooterSubsystem</span>();
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">XboxController</span> <span class="hljs-variable">m_controller</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">XboxController</span>(<span class="hljs-number">0</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">RobotContainer</span><span class="hljs-params">()</span> {
+        configureButtonBindings();
+        
+        m_drive.setDefaultCommand(
+            <span class="hljs-keyword">new</span> <span class="hljs-title class_">RunCommand</span>(
+                () -&gt; m_drive.arcadeDrive(
+                    m_controller.getLeftY(),
+                    m_controller.getRightX()
+                ),
+                m_drive
+            )
+        );
+    }
+    
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configureButtonBindings</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">JoystickButton</span>(m_controller, Button.kA.value)
+            .whenPressed(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ShootCommand</span>(m_shooter));
+    }
+}
+</code></pre>
+<ol start="3">
+<li>Subsystem Example</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">WPI_TalonFX</span> <span class="hljs-variable">leftMaster</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WPI_TalonFX</span>(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">WPI_TalonFX</span> <span class="hljs-variable">rightMaster</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WPI_TalonFX</span>(<span class="hljs-number">2</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">DriveSubsystem</span><span class="hljs-params">()</span> {
+        rightMaster.setInverted(<span class="hljs-literal">true</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">arcadeDrive</span><span class="hljs-params">(<span class="hljs-type">double</span> speed, <span class="hljs-type">double</span> rotation)</span> {
+        <span class="hljs-type">var</span> <span class="hljs-variable">speeds</span> <span class="hljs-operator">=</span> DifferentialDrive.arcadeDriveIK(speed, rotation, <span class="hljs-literal">true</span>);
+        leftMaster.set(speeds.left);
+        rightMaster.set(speeds.right);
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">periodic</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// This method is called once per scheduler run</span>
+        updateDashboard();
+    }
+}
+</code></pre>
+<h2 id="mode-specific-methods">Mode-Specific Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Called When</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>robotInit</td>
+<td>Robot starts</td>
+<td>One-time initialization</td>
+</tr>
+<tr>
+<td>disabledInit</td>
+<td>Robot enters disabled</td>
+<td>Disable outputs</td>
+</tr>
+<tr>
+<td>autonomousInit</td>
+<td>Auto mode starts</td>
+<td>Setup auto routine</td>
+</tr>
+<tr>
+<td>teleopInit</td>
+<td>Teleop mode starts</td>
+<td>Setup driver control</td>
+</tr>
+<tr>
+<td>testInit</td>
+<td>Test mode starts</td>
+<td>Setup test mode</td>
+</tr>
+<tr>
+<td>*Periodic</td>
+<td>Every 20ms</td>
+<td>Regular updates</td>
+</tr>
+</tbody>
+</table>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="code-organization">Code Organization</h3>
+<ol>
+<li>One subsystem per major robot function</li>
+<li>Clear separation of concerns</li>
+<li>Consistent naming conventions</li>
+<li>Well-documented interfaces</li>
+</ol>
+<h3 id="command-guidelines">Command Guidelines</h3>
+<ol>
+<li>Single responsibility principle</li>
+<li>Clear start and end conditions</li>
+<li>Proper use of requirements</li>
+<li>Timeout implementation</li>
+</ol>
+<h3 id="safety-considerations">Safety Considerations</h3>
+<ol>
+<li>Motor safety enabled</li>
+<li>Limit switch checks</li>
+<li>Current monitoring</li>
+<li>Fail-safe defaults</li>
+</ol>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html">Command-Based Programming</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/software/roborio-info/program-structure.html">Robot Program Structure</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

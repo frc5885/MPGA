@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>PID Control</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="pid-control">PID Control</h1>
+<h2 id="overview">Overview</h2>
+<p>PID (Proportional, Integral, Derivative) control is a feedback mechanism used for precise motor control and robot movements.</p>
+<h2 id="components">Components</h2>
+<ul>
+<li><strong>P (Proportional)</strong>: Responds proportionally to the current error</li>
+<li><strong>I (Integral)</strong>: Accumulates error over time to eliminate steady-state error</li>
+<li><strong>D (Derivative)</strong>: Responds to the rate of change to reduce oscillation</li>
+</ul>
+<h2 id="implementation-examples">Implementation Examples</h2>
+<h3 id="basic-pid-controller">Basic PID Controller</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SimplePIDController</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> kP, kI, kD;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span> <span class="hljs-variable">integral</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span> <span class="hljs-variable">previousError</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">SimplePIDController</span><span class="hljs-params">(<span class="hljs-type">double</span> kP, <span class="hljs-type">double</span> kI, <span class="hljs-type">double</span> kD)</span> {
+        <span class="hljs-built_in">this</span>.kP = kP;
+        <span class="hljs-built_in">this</span>.kI = kI;
+        <span class="hljs-built_in">this</span>.kD = kD;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">calculate</span><span class="hljs-params">(<span class="hljs-type">double</span> setpoint, <span class="hljs-type">double</span> measurement)</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">error</span> <span class="hljs-operator">=</span> setpoint - measurement;
+        integral += error * <span class="hljs-number">0.02</span>; <span class="hljs-comment">// 20ms loop time</span>
+        <span class="hljs-type">double</span> <span class="hljs-variable">derivative</span> <span class="hljs-operator">=</span> (error - previousError) / <span class="hljs-number">0.02</span>;
+        previousError = error;
+        
+        <span class="hljs-keyword">return</span> kP * error + kI * integral + kD * derivative;
+    }
+}
+</code></pre>
+<h3 id="wpilib-pid-example">WPILib PID Example</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShooterSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">CANSparkMax</span> <span class="hljs-variable">motor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CANSparkMax</span>(<span class="hljs-number">1</span>, MotorType.kBrushless);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">PIDController</span> <span class="hljs-variable">pid</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PIDController</span>(<span class="hljs-number">0.1</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.01</span>);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setVelocity</span><span class="hljs-params">(<span class="hljs-type">double</span> targetRPM)</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">currentRPM</span> <span class="hljs-operator">=</span> motor.getEncoder().getVelocity();
+        <span class="hljs-type">double</span> <span class="hljs-variable">output</span> <span class="hljs-operator">=</span> pid.calculate(currentRPM, targetRPM);
+        motor.set(output);
+    }
+}
+</code></pre>
+<h2 id="tuning-process">Tuning Process</h2>
+<ol>
+<li>Start with all gains at 0</li>
+<li>Increase P until oscillation</li>
+<li>Reduce P by 40%</li>
+<li>Increase D to reduce overshoot</li>
+<li>Add I if steady-state error persists</li>
+</ol>
+<h2 id="common-pid-applications">Common PID Applications</h2>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>P Range</th>
+<th>I Range</th>
+<th>D Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flywheel</td>
+<td>0.1-0.3</td>
+<td>0-0.001</td>
+<td>0-0.1</td>
+</tr>
+<tr>
+<td>Arm</td>
+<td>1.0-3.0</td>
+<td>0-0.01</td>
+<td>0.1-1.0</td>
+</tr>
+<tr>
+<td>Drive</td>
+<td>0.5-2.0</td>
+<td>0-0.001</td>
+<td>0.1-0.5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="advanced-techniques">Advanced Techniques</h2>
+<h3 id="feed-forward">Feed Forward</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShooterPIDFF</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">SimpleMotorFeedforward</span> <span class="hljs-variable">ff</span> <span class="hljs-operator">=</span> 
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleMotorFeedforward</span>(<span class="hljs-number">0.1</span>, <span class="hljs-number">0.12</span>);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">PIDController</span> <span class="hljs-variable">pid</span> <span class="hljs-operator">=</span> 
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">PIDController</span>(<span class="hljs-number">0.1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+        
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">calculate</span><span class="hljs-params">(<span class="hljs-type">double</span> setpoint, <span class="hljs-type">double</span> measurement)</span> {
+        <span class="hljs-keyword">return</span> ff.calculate(setpoint) + 
+               pid.calculate(measurement, setpoint);
+    }
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Always implement deadbands</li>
+<li>Use motion profiling for position control</li>
+<li>Consider feed forward for known systems</li>
+<li>Log PID data for tuning</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

@@ -114,4 +114,4 @@ public class Main {
 
 ---
 
-This concludes the **Basic Java Programming** section. Next, we will explore **Intermediate Java Programming** concepts.
+This concludes the **Basic Java Programming** section. Next, we will explore [Intermediate Java Programming](03_Intermediate_Java_Programming.md) concepts.

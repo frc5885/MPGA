@@ -28,3 +28,6 @@ Welcome to the comprehensive FRC Java Programming Tutorial. This guide will take
 
 ## Getting Started
 Begin with the Java Fundamentals section if you're new to Java programming, or jump directly to FRC Basics if you're already comfortable with Java.
+
+## Condensed Version
+- [FRC_Java_Programming_Tutorial(condensed version)](/FRC_Java_Programming_Tutorial/01_Introduction.md)

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Intermediate Java Programming</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="intermediate-java-programming">Intermediate Java Programming</h1>
+<p>In this section, we will explore more advanced Java concepts that are essential for building robust and efficient FRC robot programs.</p>
+<hr>
+<h2 id="1-collections-framework">1. Collections Framework</h2>
+<p>The Java Collections Framework provides data structures like lists, sets, and maps to store and manipulate groups of objects.</p>
+<h3 id="example-using-an-arraylist">Example: Using an ArrayList</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        ArrayList&lt;String&gt; teamMembers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();
+        teamMembers.add(<span class="hljs-string">&quot;Alice&quot;</span>);
+        teamMembers.add(<span class="hljs-string">&quot;Bob&quot;</span>);
+        teamMembers.add(<span class="hljs-string">&quot;Charlie&quot;</span>);
+
+        <span class="hljs-keyword">for</span> (String member : teamMembers) {
+            System.out.println(member);
+        }
+    }
+}
+</code></pre>
+<h3 id="example-using-a-hashmap">Example: Using a HashMap</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.HashMap;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        HashMap&lt;Integer, String&gt; robotModes = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();
+        robotModes.put(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Autonomous&quot;</span>);
+        robotModes.put(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;Teleop&quot;</span>);
+        robotModes.put(<span class="hljs-number">3</span>, <span class="hljs-string">&quot;Test&quot;</span>);
+
+        System.out.println(<span class="hljs-string">&quot;Mode 1: &quot;</span> + robotModes.get(<span class="hljs-number">1</span>));
+    }
+}
+</code></pre>
+<hr>
+<h2 id="2-exception-handling">2. Exception Handling</h2>
+<p>Exception handling ensures your program can handle errors gracefully.</p>
+<h3 id="example-try-catch-block">Example: Try-Catch Block</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span> / <span class="hljs-number">0</span>; <span class="hljs-comment">// This will throw an exception</span>
+        } <span class="hljs-keyword">catch</span> (ArithmeticException e) {
+            System.out.println(<span class="hljs-string">&quot;Error: Division by zero is not allowed.&quot;</span>);
+        }
+    }
+}
+</code></pre>
+<h3 id="example-throwing-an-exception">Example: Throwing an Exception</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Exception</span>(<span class="hljs-string">&quot;Custom exception message&quot;</span>);
+    }
+}
+</code></pre>
+<hr>
+<h2 id="3-file-io">3. File I/O</h2>
+<p>File I/O allows you to read from and write to files, which can be useful for logging robot data.</p>
+<h3 id="example-writing-to-a-file">Example: Writing to a File</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.io.FileWriter;
+<span class="hljs-keyword">import</span> java.io.IOException;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-keyword">try</span> (<span class="hljs-type">FileWriter</span> <span class="hljs-variable">writer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileWriter</span>(<span class="hljs-string">&quot;log.txt&quot;</span>)) {
+            writer.write(<span class="hljs-string">&quot;Robot initialized successfully.&quot;</span>);
+        } <span class="hljs-keyword">catch</span> (IOException e) {
+            System.out.println(<span class="hljs-string">&quot;Error writing to file: &quot;</span> + e.getMessage());
+        }
+    }
+}
+</code></pre>
+<h3 id="example-reading-from-a-file">Example: Reading from a File</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.io.File;
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> java.util.Scanner;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-keyword">try</span> (<span class="hljs-type">Scanner</span> <span class="hljs-variable">scanner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;log.txt&quot;</span>))) {
+            <span class="hljs-keyword">while</span> (scanner.hasNextLine()) {
+                System.out.println(scanner.nextLine());
+            }
+        } <span class="hljs-keyword">catch</span> (IOException e) {
+            System.out.println(<span class="hljs-string">&quot;Error reading from file: &quot;</span> + e.getMessage());
+        }
+    }
+}
+</code></pre>
+<hr>
+<h2 id="4-threads-and-concurrency">4. Threads and Concurrency</h2>
+<p>Threads allow you to perform multiple tasks simultaneously, which is useful for handling robot subsystems.</p>
+<h3 id="example-creating-a-thread">Example: Creating a Thread</h3>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+        <span class="hljs-type">Thread</span> <span class="hljs-variable">thread</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; {
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) {
+                System.out.println(<span class="hljs-string">&quot;Thread running: &quot;</span> + i);
+                <span class="hljs-keyword">try</span> {
+                    Thread.sleep(<span class="hljs-number">1000</span>); <span class="hljs-comment">// Pause for 1 second</span>
+                } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+                    System.out.println(<span class="hljs-string">&quot;Thread interrupted.&quot;</span>);
+                }
+            }
+        });
+
+        thread.start();
+    }
+}
+</code></pre>
+<hr>
+<p>This concludes the <strong>Intermediate Java Programming</strong> section. Next, we will dive into <a href="04_Introduction_to_FRC_Programming.html">Introduction to FRC Programming</a>.</p>
+
+            
+            
+        </body>
+        </html>

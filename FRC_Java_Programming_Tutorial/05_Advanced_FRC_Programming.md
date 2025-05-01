@@ -111,4 +111,4 @@ public class AutonomousPathPlanning {
 
 ---
 
-This concludes the **Advanced FRC Programming** section. In the next section, we will provide useful resources and troubleshooting tips.
+This concludes the **Advanced FRC Programming** section. In the next section, we will provide useful resources and troubleshooting tips. [Appendices](06_Appendices.md)

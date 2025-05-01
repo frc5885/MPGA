@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Data Structures and Algorithms</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="data-structures-and-algorithms">Data Structures and Algorithms</h1>
+<h2 id="common-data-structures-in-frc">Common Data Structures in FRC</h2>
+<h3 id="data-structure-hierarchy">Data Structure Hierarchy</h3>
+<pre><code>Data Structures
+├── Linear
+│   ├── Arrays
+│   ├── ArrayList
+│   └── Queue
+├── Non-Linear
+│   ├── Tree
+│   └── Graph
+└── Hash-Based
+    └── HashMap
+</code></pre>
+<h2 id="examples">Examples</h2>
+<ol>
+<li>Array Operations for Sensor Data</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SensorBuffer</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span>[] values;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> currentIndex;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">SensorBuffer</span><span class="hljs-params">(<span class="hljs-type">int</span> size)</span> {
+        values = <span class="hljs-keyword">new</span> <span class="hljs-title class_">double</span>[size];
+        currentIndex = <span class="hljs-number">0</span>;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addReading</span><span class="hljs-params">(<span class="hljs-type">double</span> value)</span> {
+        values[currentIndex] = value;
+        currentIndex = (currentIndex + <span class="hljs-number">1</span>) % values.length;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getAverage</span><span class="hljs-params">()</span> {
+        <span class="hljs-type">double</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">double</span> value : values) {
+            sum += value;
+        }
+        <span class="hljs-keyword">return</span> sum / values.length;
+    }
+}
+</code></pre>
+<ol start="2">
+<li>ArrayList for Dynamic Commands</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AutoSequence</span> {
+    <span class="hljs-keyword">private</span> ArrayList&lt;Command&gt; commands;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">AutoSequence</span><span class="hljs-params">()</span> {
+        commands = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addCommand</span><span class="hljs-params">(Command cmd)</span> {
+        commands.add(cmd);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">executeSequence</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">for</span> (Command cmd : commands) {
+            cmd.execute();
+        }
+    }
+}
+</code></pre>
+<ol start="3">
+<li>HashMap for Robot Configuration</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.HashMap;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RobotConfig</span> {
+    <span class="hljs-keyword">private</span> HashMap&lt;String, Double&gt; constants;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">RobotConfig</span><span class="hljs-params">()</span> {
+        constants = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();
+        constants.put(<span class="hljs-string">&quot;kP&quot;</span>, <span class="hljs-number">0.5</span>);
+        constants.put(<span class="hljs-string">&quot;kI&quot;</span>, <span class="hljs-number">0.1</span>);
+        constants.put(<span class="hljs-string">&quot;kD&quot;</span>, <span class="hljs-number">0.1</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> Double <span class="hljs-title function_">getValue</span><span class="hljs-params">(String key)</span> {
+        <span class="hljs-keyword">return</span> constants.getOrDefault(key, <span class="hljs-number">0.0</span>);
+    }
+}
+</code></pre>
+<h2 id="common-algorithms-in-frc">Common Algorithms in FRC</h2>
+<h3 id="performance-comparison">Performance Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Time Complexity</th>
+<th>Space Complexity</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear Search</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>Finding sensor value</td>
+</tr>
+<tr>
+<td>Binary Search</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+<td>Lookup tables</td>
+</tr>
+<tr>
+<td>Bubble Sort</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td>Small data sets</td>
+</tr>
+<tr>
+<td>Quick Sort</td>
+<td>O(n log n)</td>
+<td>O(log n)</td>
+<td>Large data sets</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples-1">Examples</h3>
+<ol>
+<li>Moving Average Filter</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MovingAverageFilter</span> {
+    <span class="hljs-keyword">private</span> Queue&lt;Double&gt; window;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> maxSize;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span> sum;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">MovingAverageFilter</span><span class="hljs-params">(<span class="hljs-type">int</span> size)</span> {
+        window = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();
+        maxSize = size;
+        sum = <span class="hljs-number">0.0</span>;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">process</span><span class="hljs-params">(<span class="hljs-type">double</span> value)</span> {
+        sum += value;
+        window.add(value);
+        
+        <span class="hljs-keyword">if</span> (window.size() &gt; maxSize) {
+            sum -= window.remove();
+        }
+        
+        <span class="hljs-keyword">return</span> sum / window.size();
+    }
+}
+</code></pre>
+<ol start="2">
+<li>Binary Search for Lookup Tables</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LookupTable</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span>[] inputs;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span>[] outputs;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">interpolate</span><span class="hljs-params">(<span class="hljs-type">double</span> input)</span> {
+        <span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> binarySearch(input);
+        <span class="hljs-keyword">if</span> (index &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> outputs[<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">if</span> (index &gt;= inputs.length - <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> outputs[outputs.length - <span class="hljs-number">1</span>];
+        
+        <span class="hljs-keyword">return</span> linearInterpolate(inputs[index], outputs[index],
+                               inputs[index + <span class="hljs-number">1</span>], outputs[index + <span class="hljs-number">1</span>],
+                               input);
+    }
+    
+    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-title function_">binarySearch</span><span class="hljs-params">(<span class="hljs-type">double</span> target)</span> {
+        <span class="hljs-type">int</span> <span class="hljs-variable">low</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> <span class="hljs-variable">high</span> <span class="hljs-operator">=</span> inputs.length - <span class="hljs-number">1</span>;
+        
+        <span class="hljs-keyword">while</span> (low &lt;= high) {
+            <span class="hljs-type">int</span> <span class="hljs-variable">mid</span> <span class="hljs-operator">=</span> (low + high) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (inputs[mid] == target) <span class="hljs-keyword">return</span> mid;
+            <span class="hljs-keyword">if</span> (inputs[mid] &lt; target) low = mid + <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">else</span> high = mid - <span class="hljs-number">1</span>;
+        }
+        <span class="hljs-keyword">return</span> high;
+    }
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Choose appropriate data structures based on use case</li>
+<li>Consider memory constraints on the RoboRIO</li>
+<li>Use built-in Java collections when possible</li>
+<li>Implement efficient algorithms for real-time operations</li>
+<li>Document complex data structures and algorithms</li>
+</ol>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.oracle.com/javase/tutorial/collections/">Java Collections Framework</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/software/basic-programming/arrays.html">WPILib Data Storage</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

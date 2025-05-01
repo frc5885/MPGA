@@ -54,4 +54,4 @@ This tutorial is for:
 
 ---
 
-Let's get started with **Basic Java Programming** in the next section!
+Let's get started with [Basic Java Programming](02_Basic_Java_Programming.md) in the next section!

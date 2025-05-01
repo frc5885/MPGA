@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Introduction to FRC Programming</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="introduction-to-frc-programming">Introduction to FRC Programming</h1>
+<p>In this section, we will introduce you to FRC programming concepts, including WPILib, setting up your development environment, and understanding the basic structure of an FRC robot program.</p>
+<hr>
+<h2 id="1-overview-of-wpilib">1. Overview of WPILib</h2>
+<p>WPILib is the software library used in FRC to control robots. It provides tools and APIs for:</p>
+<ul>
+<li>Motor control</li>
+<li>Sensor integration</li>
+<li>Autonomous and teleoperated modes</li>
+<li>Networking and communication with the Driver Station</li>
+</ul>
+<h3 id="key-components-of-wpilib">Key Components of WPILib:</h3>
+<ul>
+<li><strong>Subsystems</strong>: Represent physical components of the robot (e.g., drivetrain, arm).</li>
+<li><strong>Commands</strong>: Define actions for the robot to perform.</li>
+<li><strong>Scheduler</strong>: Manages the execution of commands.</li>
+</ul>
+<hr>
+<h2 id="2-setting-up-the-development-environment">2. Setting Up the Development Environment</h2>
+<p>To start programming your FRC robot, follow these steps:</p>
+<ol>
+<li>
+<p><strong>Install Required Software</strong>:</p>
+<ul>
+<li><a href="https://code.visualstudio.com/">VS Code</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html">WPILib Installer</a></li>
+</ul>
+</li>
+<li>
+<p><strong>Create a New Robot Project</strong>:</p>
+<ul>
+<li>Open VS Code.</li>
+<li>Use the WPILib extension to create a new project.</li>
+<li>Select the appropriate template (e.g., Command-Based Robot).</li>
+</ul>
+</li>
+<li>
+<p><strong>Deploy Code to the Robot</strong>:</p>
+<ul>
+<li>Connect your computer to the robot's network.</li>
+<li>Use the &quot;Deploy Robot Code&quot; option in VS Code.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="3-basic-robot-code-structure">3. Basic Robot Code Structure</h2>
+<p>An FRC robot program typically consists of the following files:</p>
+<h3 id="robotjava">Robot.java</h3>
+<p>This is the main entry point of your robot program. It defines the robot's lifecycle methods:</p>
+<ul>
+<li><code>robotInit()</code>: Runs once when the robot starts.</li>
+<li><code>autonomousInit()</code>: Runs once at the start of autonomous mode.</li>
+<li><code>teleopInit()</code>: Runs once at the start of teleoperated mode.</li>
+<li><code>robotPeriodic()</code>: Runs periodically in all modes.</li>
+</ul>
+<h3 id="example-basic-robotjava">Example: Basic Robot.java</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.TimedRobot;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Robot</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">TimedRobot</span> {
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">robotInit</span><span class="hljs-params">()</span> {
+        System.out.println(<span class="hljs-string">&quot;Robot Initialized&quot;</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autonomousInit</span><span class="hljs-params">()</span> {
+        System.out.println(<span class="hljs-string">&quot;Autonomous Mode Started&quot;</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">teleopInit</span><span class="hljs-params">()</span> {
+        System.out.println(<span class="hljs-string">&quot;Teleop Mode Started&quot;</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">robotPeriodic</span><span class="hljs-params">()</span> {
+        System.out.println(<span class="hljs-string">&quot;Robot Periodic Task&quot;</span>);
+    }
+}
+</code></pre>
+<hr>
+<h3 id="subsystems">Subsystems</h3>
+<p>Subsystems represent physical components of the robot, such as the drivetrain or arm.</p>
+<h3 id="example-drivetrain-subsystem">Example: Drivetrain Subsystem</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Drivetrain</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">drive</span><span class="hljs-params">(<span class="hljs-type">double</span> speed, <span class="hljs-type">double</span> rotation)</span> {
+        System.out.println(<span class="hljs-string">&quot;Driving with speed: &quot;</span> + speed + <span class="hljs-string">&quot; and rotation: &quot;</span> + rotation);
+    }
+}
+</code></pre>
+<hr>
+<h3 id="commands">Commands</h3>
+<p>Commands define actions for the robot to perform, such as moving forward or turning.</p>
+<h3 id="example-drive-command">Example: Drive Command</h3>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj2.command.CommandBase;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveCommand</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CommandBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Drivetrain drivetrain;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">DriveCommand</span><span class="hljs-params">(Drivetrain drivetrain)</span> {
+        <span class="hljs-built_in">this</span>.drivetrain = drivetrain;
+        addRequirements(drivetrain);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span> {
+        drivetrain.drive(<span class="hljs-number">0.5</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// Drive forward at half speed</span>
+    }
+}
+</code></pre>
+<hr>
+<p>This concludes the <strong>Introduction to FRC Programming</strong> section. Next, we will explore <a href="05_Advanced_FRC_Programming.html">Advanced FRC Programming</a> concepts.</p>
+
+            
+            
+        </body>
+        </html>

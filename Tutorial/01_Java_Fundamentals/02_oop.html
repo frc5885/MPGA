@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Object-Oriented Programming in Java</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="object-oriented-programming-in-java">Object-Oriented Programming in Java</h1>
+<h2 id="class-hierarchy-diagram">Class Hierarchy Diagram</h2>
+<pre><code>Object-Oriented Concepts
+├── Class
+│   ├── Properties (Fields)
+│   └── Methods
+├── Inheritance
+│   ├── Superclass
+│   └── Subclass
+├── Encapsulation
+│   ├── Public
+│   ├── Private
+│   └── Protected
+└── Polymorphism
+    ├── Method Overriding
+    └── Method Overloading
+</code></pre>
+<h2 id="examples">Examples</h2>
+<ol>
+<li>Basic Class Structure</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Robot</span> {
+    <span class="hljs-comment">// Properties</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-type">double</span> speed;
+    <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> enabled;
+    
+    <span class="hljs-comment">// Constructor</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Robot</span><span class="hljs-params">()</span> {
+        <span class="hljs-built_in">this</span>.speed = <span class="hljs-number">0.0</span>;
+        <span class="hljs-built_in">this</span>.enabled = <span class="hljs-literal">false</span>;
+    }
+    
+    <span class="hljs-comment">// Methods</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setSpeed</span><span class="hljs-params">(<span class="hljs-type">double</span> speed)</span> {
+        <span class="hljs-keyword">if</span> (enabled) {
+            <span class="hljs-built_in">this</span>.speed = Math.min(<span class="hljs-number">1.0</span>, Math.max(-<span class="hljs-number">1.0</span>, speed));
+        }
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getSpeed</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.speed;
+    }
+}
+</code></pre>
+<ol start="2">
+<li>Inheritance Example</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Subsystem</span> {
+    <span class="hljs-keyword">protected</span> String name;
+    <span class="hljs-keyword">protected</span> <span class="hljs-type">boolean</span> initialized;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initialize</span><span class="hljs-params">()</span> {
+        initialized = <span class="hljs-literal">true</span>;
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Subsystem</span> {
+    <span class="hljs-keyword">private</span> Motor leftMotor;
+    <span class="hljs-keyword">private</span> Motor rightMotor;
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initialize</span><span class="hljs-params">()</span> {
+        <span class="hljs-built_in">super</span>.initialize();
+        leftMotor.configure();
+        rightMotor.configure();
+    }
+}
+</code></pre>
+<ol start="3">
+<li>Polymorphism Example</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Controller</span> {
+    <span class="hljs-comment">// Method overloading</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setSpeed</span><span class="hljs-params">(<span class="hljs-type">int</span> speed)</span> {
+        setSpeed((<span class="hljs-type">double</span>)speed / <span class="hljs-number">100.0</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setSpeed</span><span class="hljs-params">(<span class="hljs-type">double</span> speed)</span> {
+        <span class="hljs-comment">// Direct speed setting</span>
+    }
+}
+</code></pre>
+<h2 id="access-modifiers-table">Access Modifiers Table</h2>
+<table>
+<thead>
+<tr>
+<th>Modifier</th>
+<th>Class</th>
+<th>Package</th>
+<th>Subclass</th>
+<th>World</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>default</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>private</td>
+<td>✓</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-oop-concepts">Key OOP Concepts</h2>
+<h3 id="encapsulation">Encapsulation</h3>
+<ul>
+<li>Bundling data and methods that operate on that data within a single unit</li>
+<li>Hiding internal details and providing an interface</li>
+</ul>
+<h3 id="inheritance">Inheritance</h3>
+<ul>
+<li>Creating new classes that are built upon existing classes</li>
+<li>Promotes code reuse and establishes relationships between classes</li>
+</ul>
+<h3 id="polymorphism">Polymorphism</h3>
+<ul>
+<li>Ability of objects to take on multiple forms</li>
+<li>Method overriding and overloading</li>
+<li>Runtime vs compile-time polymorphism</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Use meaningful class and method names</li>
+<li>Follow proper encapsulation principles</li>
+<li>Design classes with single responsibility</li>
+<li>Implement interfaces for common behaviors</li>
+<li>Use inheritance judiciously</li>
+</ol>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/concepts/">Java OOP Concepts</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/software/basic-programming/java-basics.html">WPILib Object-Oriented Programming</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Introduction to WPILib</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="introduction-to-wpilib">Introduction to WPILib</h1>
+<h2 id="wpilib-architecture">WPILib Architecture</h2>
+<pre><code>WPILib Framework
+├── Core Classes
+│   ├── TimedRobot
+│   ├── Command
+│   └── Subsystem
+├── Hardware Interfaces
+│   ├── Motors
+│   ├── Sensors
+│   └── Controllers
+└── Utilities
+    ├── Timer
+    ├── SmartDashboard
+    └── Preferences
+</code></pre>
+<h2 id="essential-components">Essential Components</h2>
+<h3 id="common-base-classes">Common Base Classes</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Purpose</th>
+<th>Common Use Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TimedRobot</td>
+<td>Main robot class</td>
+<td>Base for robot code</td>
+</tr>
+<tr>
+<td>Command</td>
+<td>Action definitions</td>
+<td>Autonomous sequences</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td>System grouping</td>
+<td>Drive, Shooter, Intake</td>
+</tr>
+<tr>
+<td>RobotContainer</td>
+<td>Robot structure</td>
+<td>Component organization</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<ol>
+<li>Basic Robot Program</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.TimedRobot;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Robot</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">TimedRobot</span> {
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">robotInit</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Robot initialization code</span>
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">teleopPeriodic</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Teleop control code</span>
+    }
+    
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autonomousPeriodic</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Autonomous control code</span>
+    }
+}
+</code></pre>
+<ol start="2">
+<li>Using SmartDashboard</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SensorMonitor</span> {
+    <span class="hljs-keyword">private</span> AnalogInput sensor;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">updateDashboard</span><span class="hljs-params">()</span> {
+        SmartDashboard.putNumber(<span class="hljs-string">&quot;Sensor Value&quot;</span>, sensor.getValue());
+        SmartDashboard.putBoolean(<span class="hljs-string">&quot;Is Connected&quot;</span>, sensor.isConnected());
+    }
+}
+</code></pre>
+<ol start="3">
+<li>Timer Usage</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.Timer;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AutoSequence</span> {
+    <span class="hljs-keyword">private</span> Timer timer;
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initialize</span><span class="hljs-params">()</span> {
+        timer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Timer</span>();
+        timer.start();
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">if</span> (timer.get() &lt; <span class="hljs-number">2.0</span>) {
+            <span class="hljs-comment">// First 2 seconds</span>
+            driveForward();
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (timer.get() &lt; <span class="hljs-number">4.0</span>) {
+            <span class="hljs-comment">// Next 2 seconds</span>
+            turnRight();
+        }
+    }
+}
+</code></pre>
+<h2 id="development-environment-setup">Development Environment Setup</h2>
+<h3 id="required-tools">Required Tools</h3>
+<ol>
+<li>WPILib VSCode</li>
+<li>Java Development Kit (JDK)</li>
+<li>FRC Game Tools</li>
+<li>FRC Driver Station</li>
+</ol>
+<h3 id="installation-steps">Installation Steps</h3>
+<ol>
+<li>Download WPILib VSCode from <a href="https://github.com/wpilibsuite/allwpilib/releases">WPILib Releases</a></li>
+<li>Install JDK 11 or newer</li>
+<li>Install FRC Game Tools</li>
+<li>Configure team number and robot connection</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="code-organization">Code Organization</h3>
+<ol>
+<li>Use consistent package structure</li>
+<li>Separate subsystems logically</li>
+<li>Implement command-based programming</li>
+<li>Maintain clear documentation</li>
+</ol>
+<h3 id="debug-tools">Debug Tools</h3>
+<ul>
+<li>RoboRIO Web Interface</li>
+<li>SmartDashboard</li>
+<li>Glass</li>
+<li>Shuffleboard</li>
+</ul>
+<h2 id="common-interfaces">Common Interfaces</h2>
+<h3 id="hardware-interface-hierarchy">Hardware Interface Hierarchy</h3>
+<pre><code>Hardware Interfaces
+├── MotorController
+│   ├── PWMMotorController
+│   └── CANMotorController
+├── Encoder
+│   ├── Quadrature
+│   └── Absolute
+└── Sensor
+    ├── DigitalInput
+    ├── AnalogInput
+    └── Gyro
+</code></pre>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.wpilib.org/">WPILib Documentation</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/controls-overviews/control-system-hardware.html">FRC Control System</a></li>
+<li><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/">Java API Documentation</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

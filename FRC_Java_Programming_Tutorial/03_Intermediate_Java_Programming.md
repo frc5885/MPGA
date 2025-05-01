@@ -139,4 +139,4 @@ public class Example {
 
 ---
 
-This concludes the **Intermediate Java Programming** section. Next, we will dive into **Introduction to FRC Programming**.
+This concludes the **Intermediate Java Programming** section. Next, we will dive into [Introduction to FRC Programming](04_Introduction_to_FRC_Programming.md).

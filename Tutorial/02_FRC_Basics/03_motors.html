@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Motors and Actuators</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="motors-and-actuators">Motors and Actuators</h1>
+<h2 id="motor-controller-hierarchy">Motor Controller Hierarchy</h2>
+<pre><code>Motor Controllers
+├── PWM Controllers
+│   ├── Spark
+│   ├── VictorSP
+│   └── PWMSparkMax
+├── CAN Controllers
+│   ├── TalonFX
+│   ├── TalonSRX
+│   ├── VictorSPX
+│   └── SparkMax
+└── Pneumatics
+    ├── Solenoid
+    └── DoubleSolenoid
+</code></pre>
+<h2 id="common-motor-types">Common Motor Types</h2>
+<table>
+<thead>
+<tr>
+<th>Motor Type</th>
+<th>Controller</th>
+<th>Protocol</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEO</td>
+<td>SparkMax</td>
+<td>CAN</td>
+<td>Drive Train</td>
+</tr>
+<tr>
+<td>Falcon 500</td>
+<td>TalonFX</td>
+<td>CAN</td>
+<td>High-Power</td>
+</tr>
+<tr>
+<td>775pro</td>
+<td>TalonSRX</td>
+<td>CAN</td>
+<td>General</td>
+</tr>
+<tr>
+<td>CIM</td>
+<td>VictorSPX</td>
+<td>CAN</td>
+<td>Legacy</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<ol>
+<li>Basic Motor Control</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShooterSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">CANSparkMax</span> <span class="hljs-variable">shooter</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CANSparkMax</span>(<span class="hljs-number">1</span>, MotorType.kBrushless);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">RelativeEncoder</span> <span class="hljs-variable">encoder</span> <span class="hljs-operator">=</span> shooter.getEncoder();
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ShooterSubsystem</span><span class="hljs-params">()</span> {
+        shooter.setIdleMode(IdleMode.kCoast);
+        shooter.setSmartCurrentLimit(<span class="hljs-number">40</span>);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setSpeed</span><span class="hljs-params">(<span class="hljs-type">double</span> speed)</span> {
+        shooter.set(speed);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getVelocity</span><span class="hljs-params">()</span> {
+        <span class="hljs-keyword">return</span> encoder.getVelocity();
+    }
+}
+</code></pre>
+<ol start="2">
+<li>Motor Group Configuration</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> WPI_TalonFX[] leftMotors = {
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">WPI_TalonFX</span>(<span class="hljs-number">1</span>),
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">WPI_TalonFX</span>(<span class="hljs-number">2</span>)
+    };
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-title function_">DriveSubsystem</span><span class="hljs-params">()</span> {
+        <span class="hljs-comment">// Configure followers</span>
+        leftMotors[<span class="hljs-number">1</span>].follow(leftMotors[<span class="hljs-number">0</span>]);
+        
+        <span class="hljs-comment">// Configure ramping</span>
+        <span class="hljs-keyword">for</span> (WPI_TalonFX motor : leftMotors) {
+            motor.configOpenloopRamp(<span class="hljs-number">0.5</span>);
+            motor.configClosedloopRamp(<span class="hljs-number">0.2</span>);
+        }
+    }
+}
+</code></pre>
+<ol start="3">
+<li>Pneumatic Control</li>
+</ol>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IntakeSubsystem</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">DoubleSolenoid</span> <span class="hljs-variable">intakePiston</span> <span class="hljs-operator">=</span> 
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DoubleSolenoid</span>(PneumaticsModuleType.CTREPCM, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">CANSparkMax</span> <span class="hljs-variable">intakeMotor</span> <span class="hljs-operator">=</span> 
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">CANSparkMax</span>(<span class="hljs-number">3</span>, MotorType.kBrushless);
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">extend</span><span class="hljs-params">()</span> {
+        intakePiston.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">retract</span><span class="hljs-params">()</span> {
+        intakePiston.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">runIntake</span><span class="hljs-params">(<span class="hljs-type">double</span> speed)</span> {
+        intakeMotor.set(speed);
+    }
+}
+</code></pre>
+<h2 id="motor-configuration">Motor Configuration</h2>
+<h3 id="current-limiting">Current Limiting</h3>
+<pre><code class="language-java"><span class="hljs-comment">// TalonFX Example</span>
+motorController.configSupplyCurrentLimit(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SupplyCurrentLimitConfiguration</span>(
+    <span class="hljs-literal">true</span>,    <span class="hljs-comment">// Enable</span>
+    <span class="hljs-number">40.0</span>,    <span class="hljs-comment">// Current limit (amps)</span>
+    <span class="hljs-number">60.0</span>,    <span class="hljs-comment">// Trigger threshold (amps)</span>
+    <span class="hljs-number">0.1</span>      <span class="hljs-comment">// Trigger threshold time (seconds)</span>
+));
+
+<span class="hljs-comment">// SparkMax Example</span>
+motorController.setSmartCurrentLimit(<span class="hljs-number">40</span>); <span class="hljs-comment">// Amps</span>
+</code></pre>
+<h3 id="control-modes">Control Modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PercentOutput</td>
+<td>-1.0 to 1.0</td>
+<td>Basic control</td>
+</tr>
+<tr>
+<td>Velocity</td>
+<td>Units/100ms</td>
+<td>Shooting</td>
+</tr>
+<tr>
+<td>Position</td>
+<td>Encoder counts</td>
+<td>Arms</td>
+</tr>
+<tr>
+<td>Current</td>
+<td>Amps</td>
+<td>Force control</td>
+</tr>
+</tbody>
+</table>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="motor-safety">Motor Safety</h3>
+<ol>
+<li>Always use current limits</li>
+<li>Implement soft limits</li>
+<li>Use ramping for smooth acceleration</li>
+<li>Monitor temperature</li>
+</ol>
+<h3 id="code-organization">Code Organization</h3>
+<ol>
+<li>Group related motors in subsystems</li>
+<li>Use meaningful constants</li>
+<li>Implement failsafe defaults</li>
+<li>Document motor IDs</li>
+</ol>
+<h3 id="configuration-tips">Configuration Tips</h3>
+<ol>
+<li>Check motor direction</li>
+<li>Calibrate sensors</li>
+<li>Test limit switches</li>
+<li>Verify encoder operation</li>
+</ol>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://docs.ctre-phoenix.com/">CTRE Documentation</a></li>
+<li><a href="https://docs.revrobotics.com/">REV Documentation</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/hardware/hardware-basics/motors.html">WPILib Motors</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>
