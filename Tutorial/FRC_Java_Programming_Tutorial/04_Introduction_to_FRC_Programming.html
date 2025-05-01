@@ -2,7 +2,7 @@
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>Introduction to FRC Programming</title>
+            <title>&#x1f916; &ast;&ast;Introduction to FRC Programming&ast;&ast;</title>
             <style>
 /* From extension vscode.github */
 /*---------------------------------------------------------------------------------------------
@@ -138,39 +138,39 @@
         
         </head>
         <body class="vscode-body vscode-light">
-            <h1 id="introduction-to-frc-programming">Introduction to FRC Programming</h1>
-<p>In this section, we will introduce you to FRC programming concepts, including WPILib, setting up your development environment, and understanding the basic structure of an FRC robot program.</p>
+            <h1 id="-introduction-to-frc-programming">🤖 <strong>Introduction to FRC Programming</strong></h1>
+<p>In this section, we will introduce you to <strong>FRC programming concepts</strong>, including WPILib, setting up your development environment, and understanding the basic structure of an FRC robot program.</p>
 <hr>
-<h2 id="1-overview-of-wpilib">1. Overview of WPILib</h2>
+<h2 id="-1-overview-of-wpilib">📘 <strong>1. Overview of WPILib</strong></h2>
 <p>WPILib is the software library used in FRC to control robots. It provides tools and APIs for:</p>
 <ul>
-<li>Motor control</li>
-<li>Sensor integration</li>
-<li>Autonomous and teleoperated modes</li>
-<li>Networking and communication with the Driver Station</li>
+<li><strong>Motor control</strong></li>
+<li><strong>Sensor integration</strong></li>
+<li><strong>Autonomous and teleoperated modes</strong></li>
+<li><strong>Networking and communication with the Driver Station</strong></li>
 </ul>
-<h3 id="key-components-of-wpilib">Key Components of WPILib:</h3>
+<h3 id="-key-components-of-wpilib">🔑 <strong>Key Components of WPILib</strong>:</h3>
 <ul>
 <li><strong>Subsystems</strong>: Represent physical components of the robot (e.g., drivetrain, arm).</li>
 <li><strong>Commands</strong>: Define actions for the robot to perform.</li>
 <li><strong>Scheduler</strong>: Manages the execution of commands.</li>
 </ul>
 <hr>
-<h2 id="2-setting-up-the-development-environment">2. Setting Up the Development Environment</h2>
+<h2 id="️-2-setting-up-the-development-environment">🛠️ <strong>2. Setting Up the Development Environment</strong></h2>
 <p>To start programming your FRC robot, follow these steps:</p>
 <ol>
 <li>
 <p><strong>Install Required Software</strong>:</p>
 <ul>
-<li><a href="https://code.visualstudio.com/">VS Code</a></li>
-<li><a href="https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html">WPILib Installer</a></li>
+<li><a href="https://code.visualstudio.com/">📥 VS Code</a></li>
+<li><a href="https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html">📥 WPILib Installer</a></li>
 </ul>
 </li>
 <li>
 <p><strong>Create a New Robot Project</strong>:</p>
 <ul>
-<li>Open VS Code.</li>
-<li>Use the WPILib extension to create a new project.</li>
+<li>Open <strong>VS Code</strong>.</li>
+<li>Use the <strong>WPILib extension</strong> to create a new project.</li>
 <li>Select the appropriate template (e.g., Command-Based Robot).</li>
 </ul>
 </li>
@@ -178,14 +178,14 @@
 <p><strong>Deploy Code to the Robot</strong>:</p>
 <ul>
 <li>Connect your computer to the robot's network.</li>
-<li>Use the &quot;Deploy Robot Code&quot; option in VS Code.</li>
+<li>Use the <strong>&quot;Deploy Robot Code&quot;</strong> option in VS Code.</li>
 </ul>
 </li>
 </ol>
 <hr>
-<h2 id="3-basic-robot-code-structure">3. Basic Robot Code Structure</h2>
+<h2 id="-3-basic-robot-code-structure">🧩 <strong>3. Basic Robot Code Structure</strong></h2>
 <p>An FRC robot program typically consists of the following files:</p>
-<h3 id="robotjava">Robot.java</h3>
+<h3 id="-robotjava">🔹 <strong>Robot.java</strong></h3>
 <p>This is the main entry point of your robot program. It defines the robot's lifecycle methods:</p>
 <ul>
 <li><code>robotInit()</code>: Runs once when the robot starts.</li>
@@ -193,7 +193,7 @@
 <li><code>teleopInit()</code>: Runs once at the start of teleoperated mode.</li>
 <li><code>robotPeriodic()</code>: Runs periodically in all modes.</li>
 </ul>
-<h3 id="example-basic-robotjava">Example: Basic Robot.java</h3>
+<h3 id="️-example-basic-robotjava">🛠️ <strong>Example: Basic Robot.java</strong></h3>
 <pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj.TimedRobot;
 
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Robot</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">TimedRobot</span> {
@@ -219,9 +219,9 @@
 }
 </code></pre>
 <hr>
-<h3 id="subsystems">Subsystems</h3>
+<h3 id="-subsystems">🔹 <strong>Subsystems</strong></h3>
 <p>Subsystems represent physical components of the robot, such as the drivetrain or arm.</p>
-<h3 id="example-drivetrain-subsystem">Example: Drivetrain Subsystem</h3>
+<h3 id="️-example-drivetrain-subsystem">🛠️ <strong>Example: Drivetrain Subsystem</strong></h3>
 <pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Drivetrain</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SubsystemBase</span> {
@@ -231,9 +231,9 @@
 }
 </code></pre>
 <hr>
-<h3 id="commands">Commands</h3>
+<h3 id="-commands">🔹 <strong>Commands</strong></h3>
 <p>Commands define actions for the robot to perform, such as moving forward or turning.</p>
-<h3 id="example-drive-command">Example: Drive Command</h3>
+<h3 id="️-example-drive-command">🛠️ <strong>Example: Drive Command</strong></h3>
 <pre><code class="language-java"><span class="hljs-keyword">import</span> edu.wpi.first.wpilibj2.command.CommandBase;
 
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DriveCommand</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CommandBase</span> {
@@ -251,7 +251,7 @@
 }
 </code></pre>
 <hr>
-<p>This concludes the <strong>Introduction to FRC Programming</strong> section. Next, we will explore <a href="05_Advanced_FRC_Programming.html">Advanced FRC Programming</a> concepts.</p>
+<p>This concludes the <strong>Introduction to FRC Programming</strong> section. Next, we will explore <a href="05_Advanced_FRC_Programming.html">🚀 Advanced FRC Programming</a> concepts.</p>
 
             
             

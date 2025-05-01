@@ -1,14 +1,14 @@
-# Intermediate Java Programming
+# 📘 **Intermediate Java Programming**
 
 In this section, we will explore more advanced Java concepts that are essential for building robust and efficient FRC robot programs.
 
 ---
 
-## 1. Collections Framework
+## 📂 **1. Collections Framework**
 
 The Java Collections Framework provides data structures like lists, sets, and maps to store and manipulate groups of objects.
 
-### Example: Using an ArrayList
+### 🛠️ **Example: Using an ArrayList**
 ```java
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class Example {
 }
 ```
 
-### Example: Using a HashMap
+### 🛠️ **Example: Using a HashMap**
 ```java
 import java.util.HashMap;
 
@@ -44,11 +44,11 @@ public class Example {
 
 ---
 
-## 2. Exception Handling
+## ⚠️ **2. Exception Handling**
 
 Exception handling ensures your program can handle errors gracefully.
 
-### Example: Try-Catch Block
+### 🛠️ **Example: Try-Catch Block**
 ```java
 public class Example {
     public static void main(String[] args) {
@@ -61,7 +61,7 @@ public class Example {
 }
 ```
 
-### Example: Throwing an Exception
+### 🛠️ **Example: Throwing an Exception**
 ```java
 public class Example {
     public static void main(String[] args) throws Exception {
@@ -72,11 +72,11 @@ public class Example {
 
 ---
 
-## 3. File I/O
+## 📄 **3. File I/O**
 
 File I/O allows you to read from and write to files, which can be useful for logging robot data.
 
-### Example: Writing to a File
+### 🛠️ **Example: Writing to a File**
 ```java
 import java.io.FileWriter;
 import java.io.IOException;
@@ -92,7 +92,7 @@ public class Example {
 }
 ```
 
-### Example: Reading from a File
+### 🛠️ **Example: Reading from a File**
 ```java
 import java.io.File;
 import java.io.IOException;
@@ -113,11 +113,11 @@ public class Example {
 
 ---
 
-## 4. Threads and Concurrency
+## 🔄 **4. Threads and Concurrency**
 
 Threads allow you to perform multiple tasks simultaneously, which is useful for handling robot subsystems.
 
-### Example: Creating a Thread
+### 🛠️ **Example: Creating a Thread**
 ```java
 public class Example {
     public static void main(String[] args) {
@@ -139,4 +139,4 @@ public class Example {
 
 ---
 
-This concludes the **Intermediate Java Programming** section. Next, we will dive into [Introduction to FRC Programming](04_Introduction_to_FRC_Programming.md).
+This concludes the **Intermediate Java Programming** section. Next, we will dive into [🤖 Introduction to FRC Programming](04_Introduction_to_FRC_Programming.md).
