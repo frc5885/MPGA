@@ -14,8 +14,9 @@ Welcome to the **comprehensive** FRC Java Programming Tutorial. This guide will 
 ### 2. **FRC Basics**  
 [🔹 WPILib Introduction](./02_FRC_Basics/01_wpilib_intro.md)  
 [🔹 Robot Program Structure](./02_FRC_Basics/02_robot_structure.md)  
-[🔹 Motors and Actuators](./02_FRC_Basics/03_motors.md)  
-[🔹 Sensors and Input](./02_FRC_Basics/04_sensors.md)
+[🔹 Subsystems Breakdown](./02_FRC_Basics/03_Subsystems.md)  
+[🔹 Motors and Actuators](./02_FRC_Basics/04_motors.md)  
+[🔹 Sensors and Input](./02_FRC_Basics/05_sensors.md)
 
 ### 3. **Advanced Controls**  
 [🔹 PID Control](./03_Advanced_Controls/01_pid.md)  

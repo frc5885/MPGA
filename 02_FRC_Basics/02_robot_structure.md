@@ -1,150 +1,198 @@
-# Robot Program Structure
+# FRC Java Codebase Tutorial
 
-## Program Architecture Types
+Welcome to the FRC Java codebase tutorial! This guide will help you understand the structure and functionality of the provided files. By the end, you'll have a solid grasp of how the robot's software is organized and how to extend it.
 
-```
-Robot Program Types
-├── Iterative Robot
-│   ├── robotInit()
-│   ├── teleopPeriodic()
-│   └── autonomousPeriodic()
-└── Command-Based
-    ├── RobotContainer
-    ├── Subsystems
-    └── Commands
-```
+---
 
-## Program Flow Diagram
-```
-Robot Lifecycle
-├── Robot Power On
-│   └── robotInit()
-├── Disabled Mode
-│   ├── disabledInit()
-│   └── disabledPeriodic()
-├── Autonomous Mode
-│   ├── autonomousInit()
-│   └── autonomousPeriodic()
-└── Teleop Mode
-    ├── teleopInit()
-    └── teleopPeriodic()
-```
+## Table of Contents
+1. [Overview](#overview)
+2. [File Breakdown](#file-breakdown)
+   - [RobotContainer.java](#robotcontainerjava)
+   - [Constants.java](#constantsjava)
+   - [Robot.java](#robotjava)
+3. [Key Concepts](#key-concepts)
+   - [Command-Based Programming](#command-based-programming)
+   - [Subsystems](#subsystems)
+   - [Triggers and Commands](#triggers-and-commands)
+4. [Type Hierarchy](#type-hierarchy)
+5. [Relevancy Diagram](#relevancy-diagram)
+6. [Next Steps](#next-steps)
 
-## Examples
+---
 
-1. Basic Robot Structure
+## Overview
+
+This codebase is designed for an FRC robot using the **Command-Based Programming** paradigm. It organizes the robot's behavior into modular components like subsystems, commands, and triggers. Here's a high-level view of the files:
+
+| File                  | Purpose                                                                 |
+|-----------------------|-------------------------------------------------------------------------|
+| `RobotContainer.java` | Main configuration file for subsystems, commands, and button mappings. |
+| `Constants.java`      | Stores global constants for the robot's configuration.                 |
+| `Robot.java`          | Entry point for the robot's lifecycle (init, periodic, etc.).          |
+
+---
+
+## File Breakdown
+
+### RobotContainer.java
+
+This file is the heart of the robot's configuration. It initializes subsystems, defines commands, and maps buttons to actions.
+
+#### Key Sections:
+1. **Subsystem Initialization**: Creates instances of subsystems like `Drive`, `Vision`, and `SuperStructure`.
+2. **Trigger Definitions**: Maps controller buttons to specific robot actions.
+3. **Autonomous Command Selection**: Configures autonomous routines using a dashboard chooser.
+
+#### Example:
 ```java
-public class Robot extends TimedRobot {
-    private DriveSubsystem drive;
-    private ShooterSubsystem shooter;
-    private XboxController controller;
-    
-    @Override
-    public void robotInit() {
-        drive = new DriveSubsystem();
-        shooter = new ShooterSubsystem();
-        controller = new XboxController(0);
-    }
-    
-    @Override
-    public void teleopPeriodic() {
-        // Drive with arcade drive
-        drive.arcadeDrive(
-            controller.getLeftY(),
-            controller.getRightX()
-        );
-        
-        // Control shooter
-        if (controller.getAButton()) {
-            shooter.shoot();
-        }
+// Define a trigger for scoring coral
+m_driverController.rightTrigger(0.1)
+    .whileTrue(new AutoScoreCoralAtBranchCommand(...))
+    .onFalse(new ResetSuperStructureCommand(...));
+```
+
+| Concept               | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| Subsystems            | Represent physical components like the drivetrain or arm.                  |
+| Commands              | Define specific actions, e.g., "drive forward" or "score coral."           |
+| Triggers              | Link controller inputs to commands, enabling user interaction.             |
+
+---
+
+### Constants.java
+
+This file contains global constants that define the robot's runtime mode and other configurations.
+
+#### Key Sections:
+1. **Runtime Modes**: Defines whether the robot is running in `REAL`, `SIM`, or `REPLAY` mode.
+2. **Tuning Flag**: Enables or disables tuning features.
+
+#### Example:
+```java
+public static final Mode kCurrentMode = RobotBase.isReal() ? Mode.REAL : kSimMode;
+```
+
+| Mode   | Description                              |
+|--------|------------------------------------------|
+| REAL   | Running on the actual robot hardware.    |
+| SIM    | Running in a physics simulator.          |
+| REPLAY | Replaying logs for debugging or analysis.|
+
+---
+
+### Robot.java
+
+This file is the entry point for the robot's lifecycle. It manages initialization, periodic updates, and mode transitions.
+
+#### Key Sections:
+1. **Initialization**: Sets up logging and the `RobotContainer`.
+2. **Periodic Updates**: Runs the scheduler and updates subsystems.
+3. **Mode-Specific Behavior**: Handles transitions between disabled, autonomous, teleop, and test modes.
+
+#### Example:
+```java
+@Override
+public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    if (m_autonomousCommand != null) {
+        m_autonomousCommand.schedule();
     }
 }
 ```
 
-2. Command-Based Structure
+| Mode       | Purpose                                                                 |
+|------------|-------------------------------------------------------------------------|
+| Disabled   | Robot is inactive but can still log data or reset states.              |
+| Autonomous | Executes pre-programmed routines without user input.                   |
+| Teleop     | Allows user control via controllers.                                   |
+| Test       | Used for testing individual components or commands.                    |
+
+---
+
+## Key Concepts
+
+### Command-Based Programming
+
+Command-based programming is a design pattern used in FRC to organize robot code. It separates logic into **commands** and **subsystems**.
+
+| Component   | Purpose                                                                 |
+|-------------|-------------------------------------------------------------------------|
+| Subsystem   | Represents a physical component of the robot (e.g., drivetrain).       |
+| Command     | Encapsulates a specific action or behavior (e.g., drive forward).      |
+| Trigger     | Links user inputs (e.g., buttons) to commands.                         |
+
+---
+
+### Subsystems
+
+Subsystems are abstractions for hardware components. For example, the `Drive` subsystem controls the robot's drivetrain.
+
+#### Example Subsystems:
+- **Drive**: Handles movement and orientation.
+- **Vision**: Processes camera data for navigation.
+- **SuperStructure**: Manages the robot's arm and elevator.
+
+---
+
+### Triggers and Commands
+
+Triggers map controller inputs to commands. For example, pressing a button might trigger a command to score a game piece.
+
+#### Example:
 ```java
-public class RobotContainer {
-    private final DriveSubsystem m_drive = new DriveSubsystem();
-    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-    private final XboxController m_controller = new XboxController(0);
-    
-    public RobotContainer() {
-        configureButtonBindings();
-        
-        m_drive.setDefaultCommand(
-            new RunCommand(
-                () -> m_drive.arcadeDrive(
-                    m_controller.getLeftY(),
-                    m_controller.getRightX()
-                ),
-                m_drive
-            )
-        );
-    }
-    
-    private void configureButtonBindings() {
-        new JoystickButton(m_controller, Button.kA.value)
-            .whenPressed(new ShootCommand(m_shooter));
-    }
-}
+m_driverController.rightTrigger(0.1)
+    .whileTrue(new AutoScoreCoralAtBranchCommand(...));
 ```
 
-3. Subsystem Example
-```java
-public class DriveSubsystem extends SubsystemBase {
-    private final WPI_TalonFX leftMaster = new WPI_TalonFX(1);
-    private final WPI_TalonFX rightMaster = new WPI_TalonFX(2);
-    
-    public DriveSubsystem() {
-        rightMaster.setInverted(true);
-    }
-    
-    public void arcadeDrive(double speed, double rotation) {
-        var speeds = DifferentialDrive.arcadeDriveIK(speed, rotation, true);
-        leftMaster.set(speeds.left);
-        rightMaster.set(speeds.right);
-    }
-    
-    @Override
-    public void periodic() {
-        // This method is called once per scheduler run
-        updateDashboard();
-    }
-}
+---
+
+## Type Hierarchy
+
+Below is a simplified type hierarchy for the codebase:
+
+```
+Robot
+├── RobotContainer
+│   ├── Subsystems
+│   │   ├── Drive
+│   │   ├── Vision
+│   │   └── SuperStructure
+│   ├── Commands
+│   │   ├── DriveCommands
+│   │   ├── AutoScoreCoralAtBranchCommand
+│   │   └── ResetSuperStructureCommand
+│   └── Triggers
+├── Constants
+└── Logger
 ```
 
-## Mode-Specific Methods
+---
 
-| Method | Called When | Purpose |
-|--------|------------|---------|
-| robotInit | Robot starts | One-time initialization |
-| disabledInit | Robot enters disabled | Disable outputs |
-| autonomousInit | Auto mode starts | Setup auto routine |
-| teleopInit | Teleop mode starts | Setup driver control |
-| testInit | Test mode starts | Setup test mode |
-| *Periodic | Every 20ms | Regular updates |
+## Relevancy Diagram
 
-## Best Practices
+The following diagram shows how the files interact:
 
-### Code Organization
-1. One subsystem per major robot function
-2. Clear separation of concerns
-3. Consistent naming conventions
-4. Well-documented interfaces
+```
+[Robot] --> [RobotContainer]
+   |              |
+   |              |
+   |              +--> [Commands] --> [Subsystems]
+   |              |                       |
+   |              |                       |
+   |              +--> [Triggers]         +--> [Drive]
+   |                                      +--> [Vision]
+   |                                      +--> [SuperStructure]
+   +--> [Constants]
+   +--> [Logger]
+```
 
-### Command Guidelines
-1. Single responsibility principle
-2. Clear start and end conditions
-3. Proper use of requirements
-4. Timeout implementation
+---
 
-### Safety Considerations
-1. Motor safety enabled
-2. Limit switch checks
-3. Current monitoring
-4. Fail-safe defaults
+## Next Steps
 
-## Further Reading
-- [Command-Based Programming](https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html)
-- [Robot Program Structure](https://docs.wpilib.org/en/stable/docs/software/roborio-info/program-structure.html)
+1. Explore Subsystems: Look into how subsystems like `Drive` and `Vision` are implemented.
+2. Write Commands: Create new commands to add functionality to the robot.
+3. Test in Simulation: Use the `SIM` mode to test your code without hardware.
+4. Deploy to Robot: Switch to `REAL` mode and deploy your code to the robot.
+
+For more information, refer to the [WPILib Documentation](https://docs.wpilib.org/).

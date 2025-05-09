@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>FRC Java Codebase Tutorial</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="frc-java-codebase-tutorial">FRC Java Codebase Tutorial</h1>
+<p>Welcome to the FRC Java codebase tutorial! This guide will help you understand the structure and functionality of the provided files. By the end, you'll have a solid grasp of how the robot's software is organized and how to extend it.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#file-breakdown">File Breakdown</a>
+<ul>
+<li><a href="#robotcontainerjava">RobotContainer.java</a></li>
+<li><a href="#constantsjava">Constants.java</a></li>
+<li><a href="#robotjava">Robot.java</a></li>
+</ul>
+</li>
+<li><a href="#key-concepts">Key Concepts</a>
+<ul>
+<li><a href="#command-based-programming">Command-Based Programming</a></li>
+<li><a href="#subsystems">Subsystems</a></li>
+<li><a href="#triggers-and-commands">Triggers and Commands</a></li>
+</ul>
+</li>
+<li><a href="#type-hierarchy">Type Hierarchy</a></li>
+<li><a href="#relevancy-diagram">Relevancy Diagram</a></li>
+<li><a href="#next-steps">Next Steps</a></li>
+</ol>
+<hr>
+<h2 id="overview">Overview</h2>
+<p>This codebase is designed for an FRC robot using the <strong>Command-Based Programming</strong> paradigm. It organizes the robot's behavior into modular components like subsystems, commands, and triggers. Here's a high-level view of the files:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RobotContainer.java</code></td>
+<td>Main configuration file for subsystems, commands, and button mappings.</td>
+</tr>
+<tr>
+<td><code>Constants.java</code></td>
+<td>Stores global constants for the robot's configuration.</td>
+</tr>
+<tr>
+<td><code>Robot.java</code></td>
+<td>Entry point for the robot's lifecycle (init, periodic, etc.).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="file-breakdown">File Breakdown</h2>
+<h3 id="robotcontainerjava">RobotContainer.java</h3>
+<p>This file is the heart of the robot's configuration. It initializes subsystems, defines commands, and maps buttons to actions.</p>
+<h4 id="key-sections">Key Sections:</h4>
+<ol>
+<li><strong>Subsystem Initialization</strong>: Creates instances of subsystems like <code>Drive</code>, <code>Vision</code>, and <code>SuperStructure</code>.</li>
+<li><strong>Trigger Definitions</strong>: Maps controller buttons to specific robot actions.</li>
+<li><strong>Autonomous Command Selection</strong>: Configures autonomous routines using a dashboard chooser.</li>
+</ol>
+<h4 id="example">Example:</h4>
+<pre><code class="language-java"><span class="hljs-comment">// Define a trigger for scoring coral</span>
+m_driverController.rightTrigger(<span class="hljs-number">0.1</span>)
+    .whileTrue(<span class="hljs-keyword">new</span> <span class="hljs-title class_">AutoScoreCoralAtBranchCommand</span>(...))
+    .onFalse(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ResetSuperStructureCommand</span>(...));
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subsystems</td>
+<td>Represent physical components like the drivetrain or arm.</td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>Define specific actions, e.g., &quot;drive forward&quot; or &quot;score coral.&quot;</td>
+</tr>
+<tr>
+<td>Triggers</td>
+<td>Link controller inputs to commands, enabling user interaction.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="constantsjava">Constants.java</h3>
+<p>This file contains global constants that define the robot's runtime mode and other configurations.</p>
+<h4 id="key-sections-1">Key Sections:</h4>
+<ol>
+<li><strong>Runtime Modes</strong>: Defines whether the robot is running in <code>REAL</code>, <code>SIM</code>, or <code>REPLAY</code> mode.</li>
+<li><strong>Tuning Flag</strong>: Enables or disables tuning features.</li>
+</ol>
+<h4 id="example-1">Example:</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Mode</span> <span class="hljs-variable">kCurrentMode</span> <span class="hljs-operator">=</span> RobotBase.isReal() ? Mode.REAL : kSimMode;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REAL</td>
+<td>Running on the actual robot hardware.</td>
+</tr>
+<tr>
+<td>SIM</td>
+<td>Running in a physics simulator.</td>
+</tr>
+<tr>
+<td>REPLAY</td>
+<td>Replaying logs for debugging or analysis.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="robotjava">Robot.java</h3>
+<p>This file is the entry point for the robot's lifecycle. It manages initialization, periodic updates, and mode transitions.</p>
+<h4 id="key-sections-2">Key Sections:</h4>
+<ol>
+<li><strong>Initialization</strong>: Sets up logging and the <code>RobotContainer</code>.</li>
+<li><strong>Periodic Updates</strong>: Runs the scheduler and updates subsystems.</li>
+<li><strong>Mode-Specific Behavior</strong>: Handles transitions between disabled, autonomous, teleop, and test modes.</li>
+</ol>
+<h4 id="example-2">Example:</h4>
+<pre><code class="language-java"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">autonomousInit</span><span class="hljs-params">()</span> {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    <span class="hljs-keyword">if</span> (m_autonomousCommand != <span class="hljs-literal">null</span>) {
+        m_autonomousCommand.schedule();
+    }
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Disabled</td>
+<td>Robot is inactive but can still log data or reset states.</td>
+</tr>
+<tr>
+<td>Autonomous</td>
+<td>Executes pre-programmed routines without user input.</td>
+</tr>
+<tr>
+<td>Teleop</td>
+<td>Allows user control via controllers.</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>Used for testing individual components or commands.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="key-concepts">Key Concepts</h2>
+<h3 id="command-based-programming">Command-Based Programming</h3>
+<p>Command-based programming is a design pattern used in FRC to organize robot code. It separates logic into <strong>commands</strong> and <strong>subsystems</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subsystem</td>
+<td>Represents a physical component of the robot (e.g., drivetrain).</td>
+</tr>
+<tr>
+<td>Command</td>
+<td>Encapsulates a specific action or behavior (e.g., drive forward).</td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td>Links user inputs (e.g., buttons) to commands.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="subsystems">Subsystems</h3>
+<p>Subsystems are abstractions for hardware components. For example, the <code>Drive</code> subsystem controls the robot's drivetrain.</p>
+<h4 id="example-subsystems">Example Subsystems:</h4>
+<ul>
+<li><strong>Drive</strong>: Handles movement and orientation.</li>
+<li><strong>Vision</strong>: Processes camera data for navigation.</li>
+<li><strong>SuperStructure</strong>: Manages the robot's arm and elevator.</li>
+</ul>
+<hr>
+<h3 id="triggers-and-commands">Triggers and Commands</h3>
+<p>Triggers map controller inputs to commands. For example, pressing a button might trigger a command to score a game piece.</p>
+<h4 id="example-3">Example:</h4>
+<pre><code class="language-java">m_driverController.rightTrigger(<span class="hljs-number">0.1</span>)
+    .whileTrue(<span class="hljs-keyword">new</span> <span class="hljs-title class_">AutoScoreCoralAtBranchCommand</span>(...));
+</code></pre>
+<hr>
+<h2 id="type-hierarchy">Type Hierarchy</h2>
+<p>Below is a simplified type hierarchy for the codebase:</p>
+<pre><code>Robot
+├── RobotContainer
+│   ├── Subsystems
+│   │   ├── Drive
+│   │   ├── Vision
+│   │   └── SuperStructure
+│   ├── Commands
+│   │   ├── DriveCommands
+│   │   ├── AutoScoreCoralAtBranchCommand
+│   │   └── ResetSuperStructureCommand
+│   └── Triggers
+├── Constants
+└── Logger
+</code></pre>
+<hr>
+<h2 id="relevancy-diagram">Relevancy Diagram</h2>
+<p>The following diagram shows how the files interact:</p>
+<pre><code>[Robot] --&gt; [RobotContainer]
+   |              |
+   |              |
+   |              +--&gt; [Commands] --&gt; [Subsystems]
+   |              |                       |
+   |              |                       |
+   |              +--&gt; [Triggers]         +--&gt; [Drive]
+   |                                      +--&gt; [Vision]
+   |                                      +--&gt; [SuperStructure]
+   +--&gt; [Constants]
+   +--&gt; [Logger]
+</code></pre>
+<hr>
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li>Explore Subsystems: Look into how subsystems like <code>Drive</code> and <code>Vision</code> are implemented.</li>
+<li>Write Commands: Create new commands to add functionality to the robot.</li>
+<li>Test in Simulation: Use the <code>SIM</code> mode to test your code without hardware.</li>
+<li>Deploy to Robot: Switch to <code>REAL</code> mode and deploy your code to the robot.</li>
+</ol>
+<p>For more information, refer to the <a href="https://docs.wpilib.org/">WPILib Documentation</a>.</p>
+
+            
+            
+        </body>
+        </html>

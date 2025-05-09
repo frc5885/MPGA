@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Subsystems in FRC</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="subsystems-in-frc">Subsystems in FRC</h1>
+<p>Welcome to the world of Java programming for FRC! This guide will help you understand the structure and purpose of the subsystems in your robot code. We'll break down the key files and concepts, using diagrams and tables to make everything clear.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#introduction-to-frc-robot-code">Introduction to FRC Robot Code</a></li>
+<li><a href="#subsystem-overview">Subsystem Overview</a></li>
+<li><a href="#file-breakdown">File Breakdown</a>
+<ul>
+<li><a href="#vision-subsystem">Vision Subsystem</a></li>
+<li><a href="#superstructure-subsystem">SuperStructure Subsystem</a></li>
+<li><a href="#feeder-subsystem">Feeder Subsystem</a></li>
+<li><a href="#endeffector-subsystem">EndEffector Subsystem</a></li>
+<li><a href="#drive-subsystem">Drive Subsystem</a></li>
+<li><a href="#led-subsystem">LED Subsystem</a></li>
+</ul>
+</li>
+<li><a href="#type-hierarchies">Type Hierarchies</a></li>
+<li><a href="#relevancy-diagrams">Relevancy Diagrams</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<hr>
+<h2 id="introduction-to-frc-robot-code">Introduction to FRC Robot Code</h2>
+<p>FRC robot code is modular and organized into <strong>subsystems</strong>. Each subsystem represents a physical or logical component of the robot, such as the drivetrain, arm, or vision system. Subsystems interact with each other to achieve complex tasks.</p>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Subsystems</strong>: Represent individual robot components.</li>
+<li><strong>Commands</strong>: Define robot actions, often using one or more subsystems.</li>
+<li><strong>Sensors and Actuators</strong>: Provide input (e.g., cameras, encoders) and output (e.g., motors, LEDs).</li>
+</ul>
+<hr>
+<h2 id="subsystem-overview">Subsystem Overview</h2>
+<p>The following table summarizes the subsystems in your robot code:</p>
+<table>
+<thead>
+<tr>
+<th>Subsystem</th>
+<th>Purpose</th>
+<th>Key Classes/Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vision</td>
+<td>Processes camera data for navigation</td>
+<td><code>Vision.java</code></td>
+</tr>
+<tr>
+<td>SuperStructure</td>
+<td>Manages the robot's arm and elevator</td>
+<td><code>SuperStructure.java</code></td>
+</tr>
+<tr>
+<td>Feeder</td>
+<td>Controls the feeding mechanism</td>
+<td><code>Feeder.java</code></td>
+</tr>
+<tr>
+<td>EndEffector</td>
+<td>Handles the robot's end effector (e.g., gripper)</td>
+<td><code>EndEffector.java</code></td>
+</tr>
+<tr>
+<td>Drive</td>
+<td>Controls the robot's drivetrain</td>
+<td><code>Drive.java</code></td>
+</tr>
+<tr>
+<td>LED</td>
+<td>Provides visual feedback for robot states</td>
+<td><code>LEDSubsystem.java</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="file-breakdown">File Breakdown</h2>
+<h3 id="vision-subsystem">Vision Subsystem</h3>
+<p>The <code>Vision.java</code> file processes camera data to help the robot navigate and locate targets.</p>
+<h4 id="key-features">Key Features</h4>
+<ul>
+<li>Handles multiple cameras.</li>
+<li>Filters and validates pose observations.</li>
+<li>Integrates with the LED subsystem to indicate camera status.</li>
+</ul>
+<h4 id="relevant-code">Relevant Code</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> Rotation2d <span class="hljs-title function_">getTargetX</span><span class="hljs-params">(<span class="hljs-type">int</span> cameraIndex)</span> {
+    <span class="hljs-keyword">return</span> m_inputs[cameraIndex].latestTargetObservation.tx();
+}
+
+<span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">periodic</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; m_io.length; i++) {
+        m_io[i].updateInputs(m_inputs[i]);
+        Logger.processInputs(<span class="hljs-string">&quot;Vision/Camera&quot;</span> + Integer.toString(i), m_inputs[i]);
+    }
+    
+    <span class="hljs-comment">// Initialize logging values</span>
+    <span class="hljs-comment">// Loop over cameras</span>
+    <span class="hljs-comment">//     -&gt; Update disconnected alert, tag poses</span>
+    <span class="hljs-comment">//     -&gt; Loop over pose observations</span>
+    <span class="hljs-comment">//         -&gt; Accept or Reject observed poses</span>
+    <span class="hljs-comment">//         -&gt; Calculate standard deviations</span>
+    <span class="hljs-comment">//     -&gt; Log camera data</span>
+    <span class="hljs-comment">// Log summary data</span>
+}
+</code></pre>
+<h4 id="type-hierarchy">Type Hierarchy</h4>
+<pre><code>Vision
+├── VisionIO
+│   ├── VisionIOInputsAutoLogged
+│   ├── PoseObservation
+├── VisionConstants
+├── AllianceFlipUtil
+├── Logger
+</code></pre>
+<hr>
+<h3 id="superstructure-subsystem">SuperStructure Subsystem</h3>
+<p>The <code>SuperStructure.java</code> file manages the robot's arm and elevator, coordinating their movements.</p>
+<h4 id="key-features-1">Key Features</h4>
+<ul>
+<li>Uses a <strong>state graph</strong> to transition between predefined states.</li>
+<li>Supports both manual and automated control.</li>
+<li>Includes visualization tools for debugging.</li>
+</ul>
+<h4 id="relevant-code-1">Relevant Code</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> SequentialCommandGroup <span class="hljs-title function_">setSuperStructureGoal</span><span class="hljs-params">(SuperStructureState state)</span> {
+    m_finalGoalState = state;
+    Logger.recordOutput(<span class="hljs-string">&quot;SuperStructure/FinalGoal&quot;</span>, m_finalGoalState);
+    List&lt;SuperStructureState&gt; states = findShortestPath(getSuperStructureGoal(), m_finalGoalState);
+    Logger.recordOutput(<span class="hljs-string">&quot;SuperStructure/States&quot;</span>, states.toString());
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SequentialCommandGroup</span>(
+        states.stream()
+            .filter(desiredState -&gt; desiredState != m_goalState)
+            .map(<span class="hljs-built_in">this</span>::setSingleState)
+            .toArray(Command[]::<span class="hljs-keyword">new</span>));
+}
+
+<span class="hljs-keyword">public</span> List&lt;SuperStructureState&gt; <span class="hljs-title function_">findShortestPath</span><span class="hljs-params">(
+      SuperStructureState start, SuperStructureState goal)</span> {
+    <span class="hljs-comment">// Null defense: if start or goal is null, return an empty list.</span>
+    <span class="hljs-keyword">if</span> (start == <span class="hljs-literal">null</span> || goal == <span class="hljs-literal">null</span>) {
+      <span class="hljs-keyword">return</span> Collections.emptyList();
+    }
+
+    <span class="hljs-comment">// If start equals goal, immediately return a singleton list.</span>
+    <span class="hljs-keyword">if</span> (start.equals(goal)) {
+      <span class="hljs-keyword">return</span> Collections.singletonList(start);
+    }
+
+    <span class="hljs-comment">// Use a queue for breadth-first search (BFS) where each element is a path (list of states).</span>
+    Queue&lt;List&lt;SuperStructureState&gt;&gt; queue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();
+    <span class="hljs-comment">// Use a set to track visited states to avoid cycles and redundant paths.</span>
+    Set&lt;SuperStructureState&gt; visited = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();
+
+    <span class="hljs-comment">// Start the BFS with a path that only contains the start state.</span>
+    List&lt;SuperStructureState&gt; initialPath = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();
+    initialPath.add(start);
+    queue.add(initialPath);
+    visited.add(start);
+
+    <span class="hljs-keyword">while</span> (!queue.isEmpty()) {
+      <span class="hljs-comment">// Dequeue the next path to explore.</span>
+      List&lt;SuperStructureState&gt; path = queue.poll();
+      <span class="hljs-type">SuperStructureState</span> <span class="hljs-variable">lastState</span> <span class="hljs-operator">=</span> path.get(path.size() - <span class="hljs-number">1</span>);
+
+      <span class="hljs-comment">// If the last state is the goal, we&#x27;ve found the shortest path.</span>
+      <span class="hljs-keyword">if</span> (lastState.equals(goal)) {
+        <span class="hljs-keyword">return</span> path;
+      }
+
+      <span class="hljs-comment">// Explore each neighbor of the last state.</span>
+      <span class="hljs-keyword">for</span> (SuperStructureState neighbor : m_graph.getNeighbors(lastState)) {
+        <span class="hljs-comment">// Only consider neighbors that haven&#x27;t been visited.</span>
+        <span class="hljs-keyword">if</span> (!visited.contains(neighbor)) {
+          visited.add(neighbor);
+          <span class="hljs-comment">// Create a new path that extends the current path with the neighbor.</span>
+          List&lt;SuperStructureState&gt; newPath = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(path);
+          newPath.add(neighbor);
+          queue.add(newPath);
+        }
+      }
+    }
+
+    <span class="hljs-comment">// If no path is found, return an empty list instead of null.</span>
+    <span class="hljs-keyword">return</span> Collections.emptyList();
+}
+
+<span class="hljs-keyword">private</span> Command <span class="hljs-title function_">setSingleState</span><span class="hljs-params">(SuperStructureState goal)</span> {
+<span class="hljs-keyword">return</span> Commands.runOnce(
+        () -&gt; {
+            setElevatorGoal(goal.elevatorGoal);
+            setArmGoal(goal.armGoal);
+        },
+        <span class="hljs-built_in">this</span>)
+    .andThen(<span class="hljs-keyword">new</span> <span class="hljs-title class_">WaitUntilCommand</span>(<span class="hljs-built_in">this</span>::isGoalAchieved))
+    .finallyDo(() -&gt; m_goalState = goal);
+}
+</code></pre>
+<h4 id="type-hierarchy-1">Type Hierarchy</h4>
+<pre><code>SuperStructure
+├── Elevator
+│   ├── ElevatorIO
+│       ├── ElevatorConstants
+│   ├── ElevatorIOInputsAutoLogged
+├── Arm
+│   ├── ArmIO
+│       ├── ArmConstants
+│   ├── ArmIOInputsAutoLogged
+├── SuperStructureState
+├── StateGraph
+├── LoggedMechanism2d
+│   ├── LoggedMechanismRoot2d
+│   ├── LoggedMechanismLigament2d
+├── Logger
+</code></pre>
+<hr>
+<h3 id="feeder-subsystem">Feeder Subsystem</h3>
+<p>The <code>Feeder.java</code> file controls the mechanism that feeds game pieces into the robot.</p>
+<h4 id="key-features-2">Key Features</h4>
+<ul>
+<li>Uses a beam break sensor to detect game pieces.</li>
+<li>Includes debouncing to filter noisy sensor data.</li>
+<li>Integrates with the LED subsystem to indicate status.</li>
+</ul>
+<h4 id="relevant-code-2">Relevant Code</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isBeamBreakTriggered</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">return</span> m_beambreakDebouncer.calculate(m_beamBreakInputs.state);
+}
+
+<span class="hljs-keyword">public</span> Command <span class="hljs-title function_">startFeederCmd</span><span class="hljs-params">()</span> {
+    <span class="hljs-type">Command</span> <span class="hljs-variable">cmd</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Command</span>() {
+        <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-variable">m_wasBeamBreakTriggered</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-variable">m_isFinished</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initialize</span><span class="hljs-params">()</span> {
+            runFeeder(FeederConstants.kFeedSpeed);
+            LEDSubsystem.getInstance().setStates(LEDStates.INTAKE_RUNNING);
+            m_wasBeamBreakTriggered = <span class="hljs-literal">false</span>;
+            m_isFinished = <span class="hljs-literal">false</span>;
+            m_isHandOffReady = <span class="hljs-literal">false</span>;
+        }
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span> {
+            <span class="hljs-keyword">if</span> (!m_wasBeamBreakTriggered &amp;&amp; isBeamBreakTriggered()) {
+                runFeeder(FeederConstants.kFeedSlowSpeed);
+                m_wasBeamBreakTriggered = <span class="hljs-literal">true</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (m_wasBeamBreakTriggered &amp;&amp; !isBeamBreakTriggered()) {
+                stop();
+                m_isHandOffReady = <span class="hljs-literal">true</span>;
+                m_isFinished = <span class="hljs-literal">true</span>;
+                LEDSubsystem.getInstance().setStates(LEDStates.IDLE);
+            }
+        }
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isFinished</span><span class="hljs-params">()</span> {
+            <span class="hljs-keyword">return</span> m_isFinished || (Constants.kCurrentMode == Mode.SIM &amp;&amp; m_isHandOffReady);
+        }
+    };
+    cmd.addRequirements(<span class="hljs-built_in">this</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InstantCommand</span>(() -&gt; cmd.schedule());
+}
+</code></pre>
+<h4 id="type-hierarchy-2">Type Hierarchy</h4>
+<pre><code>Feeder
+├── FeederIO
+│   ├── FeederConstants
+├── FeederIOInputsAutoLogged
+├── BeamBreakIO
+├── BeamBreakIOInputsAutoLogged
+├── LEDSubsystem
+│   ├── LEDStates
+├── GamePieceVisualizer
+├── Logger
+</code></pre>
+<hr>
+<h3 id="endeffector-subsystem">EndEffector Subsystem</h3>
+<p>The <code>EndEffector.java</code> file manages the robot's end effector, such as a gripper or claw.</p>
+<h4 id="key-features-3">Key Features</h4>
+<ul>
+<li>Controls the motor for intake and outtake operations.</li>
+<li>Uses current and velocity filtering to detect when a game piece is held.</li>
+<li>Includes alerts for motor disconnection.</li>
+</ul>
+<h4 id="relevant-code-3">Relevant Code</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">runEndEffectorIntake</span><span class="hljs-params">()</span> {
+    m_endEffector.setVoltage(<span class="hljs-number">12.0</span>);
+}
+
+<span class="hljs-meta">@AutoLogOutput</span>
+<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isHoldingCoral</span><span class="hljs-params">()</span> {
+    <span class="hljs-keyword">return</span> m_filteredCurrent &gt; <span class="hljs-number">10</span> &amp;&amp; m_filteredVelocity &gt; <span class="hljs-number">800</span>;
+}
+</code></pre>
+<h4 id="type-hierarchy-3">Type Hierarchy</h4>
+<pre><code>EndEffector
+├── EndEffectorIO
+│   ├── EndEffectorConstants
+├── EndEffectorIOInputsAutoLogged
+├── LinearFilter
+├── Debouncer
+├── Logger
+</code></pre>
+<hr>
+<h3 id="drive-subsystem">Drive Subsystem</h3>
+<p>The <code>Drive.java</code> file controls the robot's drivetrain, enabling movement and navigation.</p>
+<h4 id="key-features-4">Key Features</h4>
+<ul>
+<li>Implements swerve drive for precise movement.</li>
+<li>Integrates with the vision subsystem for autonomous navigation.</li>
+<li>Supports path planning and following.</li>
+</ul>
+<h4 id="relevant-code-4">Relevant Code</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">runVelocity</span><span class="hljs-params">(ChassisSpeeds speeds)</span> {
+    <span class="hljs-type">double</span> <span class="hljs-variable">linearMagnitude</span> <span class="hljs-operator">=</span> Math.hypot(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond);
+    <span class="hljs-type">Rotation2d</span> <span class="hljs-variable">linearDirection</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Rotation2d</span>(Math.atan2(speeds.vyMetersPerSecond, speeds.vxMetersPerSecond));
+    <span class="hljs-type">Translation2d</span> <span class="hljs-variable">adjustmentVector</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Translation2d</span>(
+        linearMagnitude * adjustmentBaseFactor.getAsDouble() * adjustmentFactor.getAsDouble(),
+        linearDirection);
+    speeds = speeds.minus(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ChassisSpeeds</span>(adjustmentVector.getX(), adjustmentVector.getY(), <span class="hljs-number">0.0</span>));
+
+    <span class="hljs-type">ChassisSpeeds</span> <span class="hljs-variable">discreteSpeeds</span> <span class="hljs-operator">=</span> ChassisSpeeds.discretize(speeds, <span class="hljs-number">0.02</span>);
+    SwerveModuleState[] setpointStates = m_kinematics.toSwerveModuleStates(discreteSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, kMaxSpeedMetersPerSec);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+        m_modules[i].runSetpoint(setpointStates[i]);
+    }
+}
+</code></pre>
+<h4 id="type-hierarchy-4">Type Hierarchy</h4>
+<pre><code>Drive
+├── GyroIO
+├── GyroIOInputsAutoLogged
+├── Module
+│   ├── ModuleIO
+│       ├── DriveConstants
+│       ├── SparkUtil
+│   ├── ModuleIOInputsAutoLogged
+├── SwerveDriveKinematics
+├── PathPlanner
+├── Logger
+</code></pre>
+<hr>
+<h3 id="led-subsystem">LED Subsystem</h3>
+<p>The <code>LEDSubsystem.java</code> file controls the robot's LEDs, providing visual feedback for various robot states.</p>
+<h4 id="key-features-5">Key Features</h4>
+<ul>
+<li>Divides LEDs into two sections: Poseidon and Square.</li>
+<li>Supports multiple LED patterns, including solid colors, gradients, and blinking.</li>
+<li>Integrates with other subsystems to reflect their states (e.g., intake running, scoring).</li>
+</ul>
+<h4 id="relevant-code-5">Relevant Code</h4>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setStates</span><span class="hljs-params">(LEDStates newState)</span> {
+    <span class="hljs-keyword">if</span> (!DriverStation.isAutonomous() || newState == LEDStates.AUTO) {
+        states = newState;
+        <span class="hljs-keyword">if</span> (newState == LEDStates.IDLE &amp;&amp; (coralHeld || algaeHeld)) {
+            states = LEDStates.HOLDING_PIECE;
+        } <span class="hljs-keyword">else</span> {
+            states = newState;
+        }
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">periodic</span><span class="hljs-params">()</span> {
+    states.getPattern().applyTo(m_poseidon);
+    <span class="hljs-keyword">if</span> (states != LEDStates.AUTO) {
+        squareStates = states;
+    }
+    squareStates.getPattern().applyTo(m_square);
+    m_leds.setData(m_buffer);
+}
+</code></pre>
+<h4 id="type-hierarchy-5">Type Hierarchy</h4>
+<pre><code>LEDSubsystem
+├── AddressableLED
+|   ├── AddressableLEDBuffer
+├── AddressableLEDBufferView
+├── LEDStates
+|   ├── LEDPattern
+├── Timer
+├── DriverStation
+</code></pre>
+<h4 id="interaction-with-other-subsystems">Interaction with Other Subsystems</h4>
+<ul>
+<li><strong>Feeder</strong>: Indicates when the feeder is running or ready for handoff.</li>
+<li><strong>Vision</strong>: Reflects camera status during alignment.</li>
+<li><strong>SuperStructure</strong>: Displays scoring or resetting states.</li>
+</ul>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>This guide provides an overview of the subsystems in your robot code. By understanding their purpose and interactions, you'll be better equipped to modify and extend the code for your specific needs. Happy coding!</p>
+
+            
+            
+        </body>
+        </html>
